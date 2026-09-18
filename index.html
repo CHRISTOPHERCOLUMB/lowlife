@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>НИЗШАЯ ЖИЗНЬ: Путь к высшей</title>
+<style>
+:root{
+  --paper:#e8dcc3; --paper2:#d8c8a7; --ink:#29251f; --muted:#6c6253;
+  --line:#8e8068; --accent:#604c37; --danger:#7b3e35;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:#211f1b;color:var(--ink);
+  font-family:Georgia,"Times New Roman",serif;
+  min-height:100vh;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;
+  background-image:radial-gradient(#000 0.6px,transparent .7px);
+  background-size:5px 5px;
+}
+.app{max-width:620px;margin:auto;min-height:100vh;padding:14px}
+.paper{
+  min-height:calc(100vh - 28px);padding:18px;
+  background:linear-gradient(135deg,var(--paper),#efe5cf 45%,var(--paper2));
+  box-shadow:0 0 35px #0009;position:relative;
+}
+.header{border-bottom:2px solid var(--line);padding-bottom:12px;margin-bottom:14px}
+.title{font-size:22px;letter-spacing:1px;font-weight:800}
+.subtitle{font-size:12px;color:var(--muted);margin-top:4px}
+.top{display:flex;justify-content:space-between;gap:12px;margin:12px 0}
+.money{font-size:22px;font-weight:800}.time{text-align:right;color:var(--muted)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{border:1px solid var(--line);padding:8px;background:#fff2;border-radius:5px}
+.statline{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+.bar{height:7px;background:#b7aa90;border:1px solid #857862}
+.fill{height:100%;width:50%;background:var(--accent)}
+.fill.bad{background:var(--danger)}
+.section{margin-top:16px}
+.section h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;border-bottom:1px solid var(--line);padding-bottom:5px}
+.log{
+  min-height:115px;max-height:230px;overflow:auto;
+  border:1px solid var(--line);padding:11px;background:#00000008;
+  font-size:14px;line-height:1.45;
+}
+.event{margin-bottom:10px}.event b{display:block}
+.actions{display:grid;gap:8px}
+button{
+  width:100%;border:1px solid #665844;background:#d2c19f;color:var(--ink);
+  padding:12px 10px;font:inherit;font-weight:700;border-radius:4px;
+  box-shadow:0 2px 0 #786b56;cursor:pointer
+}
+button:active{transform:translateY(1px);box-shadow:none}
+button:disabled{opacity:.45;cursor:not-allowed}
+.small{font-size:12px;color:var(--muted);font-weight:400}
+.nav{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:14px}
+.nav button{font-size:12px;padding:10px 5px}
+.modal{
+  position:fixed;inset:0;background:#0009;display:none;align-items:flex-end;justify-content:center;
+}
+.modal.open{display:flex}
+.card{
+  width:min(620px,100%);background:var(--paper);padding:18px;
+  border-top:3px solid var(--accent);box-shadow:0 -10px 35px #0008
+}
+.card h2{margin-top:0}
+.notice{padding:10px;border-left:3px solid var(--accent);background:#0000000a;font-size:13px}
+.xp{font-size:12px;color:var(--muted)}
+@media(min-width:560px){.actions{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app"><main class="paper">
+  <header class="header">
+    <div class="title">НИЗШАЯ ЖИЗНЬ</div>
+    <div class="subtitle">ПУТЬ К ВЫСШЕЙ · ПРОТОТИП v0.1</div>
+  </header>
+
+  <div class="top">
+    <div>
+      <div class="money" id="money">0 ₽</div>
+      <div class="xp">Уровень <b id="level">1</b> · <span id="xp">0</span>/100 XP</div>
+    </div>
+    <div class="time"><b id="clock">06:37</b><br><span id="day">День 1 · Понедельник</span></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="statline"><span>❤️ Здоровье</span><b id="healthV">72</b></div><div class="bar"><div class="fill" id="healthB"></div></div></div>
+    <div class="stat"><div class="statline"><span>⚡ Энергия</span><b id="energyV">54</b></div><div class="bar"><div class="fill" id="energyB"></div></div></div>
+    <div class="stat"><div class="statline"><span>🍽 Сытость</span><b id="foodV">32</b></div><div class="bar"><div class="fill" id="foodB"></div></div></div>
+    <div class="stat"><div class="statline"><span>Тяга</span><b id="cravingV">74</b></div><div class="bar"><div class="fill bad" id="cravingB"></div></div></div>
+  </div>
+
+  <section class="section">
+    <h3>События</h3>
+    <div class="log" id="log"></div>
+  </section>
+
+  <section class="section">
+    <h3 id="goalTitle">Текущая цель</h3>
+    <div class="notice" id="goal">Найти способ получить первые 100 ₽.</div>
+  </section>
+
+  <section class="section">
+    <h3>Действия</h3>
+    <div class="actions" id="actions"></div>
+  </section>
+
+  <div class="nav">
+    <button onclick="showMap()">🗺 Карта</button>
+    <button onclick="showInventory()">🎒 Инвентарь</button>
+    <button onclick="saveGame()">💾 Сохранить</button>
+  </div>
+</main></div>
+
+<div class="modal" id="modal">
+  <div class="card">
+    <h2 id="modalTitle"></h2>
+    <div id="modalBody"></div>
+    <button style="margin-top:12px" onclick="closeModal()">Закрыть</button>
+  </div>
+</div>
+
+<script>
+const KEY="nizhnyaya_zhizn_v01";
+let s={
+  money:0,health:72,energy:54,food:32,craving:74,dependence:81,
+  xp:0,level:1,day:1,minutes:397,goal:0,
+  inventory:[],unlocked:["Вокзал"],flags:{},
+  log:[]
+};
+
+function loadGame(){
+  try{const x=JSON.parse(localStorage.getItem(KEY)); if(x) s={...s,...x};}catch(e){}
+}
+function saveGame(silent=false){
+  localStorage.setItem(KEY,JSON.stringify(s));
+  if(!silent) addLog("Игра сохранена.");
+}
+function fmtMoney(n){return Math.floor(n).toLocaleString("ru-RU")+" ₽"}
+function clamp(n){return Math.max(0,Math.min(100,n))}
+function timeText(){
+  let h=Math.floor(s.minutes/60)%24,m=s.minutes%60;
+  return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
+}
+function addTime(min){
+  s.minutes+=min;
+  while(s.minutes>=1440){s.minutes-=1440;s.day++;addLog("Начался новый день.");}
+  // slow passive needs; deliberately capped to avoid runaway depletion
+  const hours=min/60;
+  s.food=clamp(s.food-hours*1.2);
+  s.craving=clamp(s.craving+hours*1.0);
+  if(s.food<8) s.health=clamp(s.health-hours*.35);
+  if(s.energy<5) s.health=clamp(s.health-hours*.2);
+}
+function addXP(n){
+  s.xp+=n;
+  while(s.xp>=100){
+    s.xp-=100;s.level++;
+    addLog("Новый уровень: "+s.level+"!");
+  }
+}
+function addLog(text){
+  s.log.unshift({t:timeText(),text});
+  s.log=s.log.slice(0,30);
+  render();
+}
+function change(delta){
+  for(const k in delta){
+    if(["health","energy","food","craving"].includes(k)) s[k]=clamp(s[k]+delta[k]);
+    else s[k]+=delta[k];
+  }
+}
+function action(name,minutes,delta,xp,msg,condition=()=>true){
+  if(!condition()) return;
+  addTime(minutes); change(delta); addXP(xp); addLog(msg);
+  saveGame(true); render();
+}
+function setGoal(n){s.goal=n;render()}
+
+function actions(){
+  const a=[];
+  if(s.goal===0){
+    a.push(["🔎 Поискать деньги","20 мин · −5 энергии",()=>{
+      // limited daily activity
+      const used=s.flags.searchDay===s.day?(s.flags.searchCount||0):0;
+      if(used>=6){addLog("Ты уже обыскал всё, что мог найти здесь сегодня.");return;}
+      s.flags.searchDay=s.day;s.flags.searchCount=used+1;
+      const outcomes=[20,35,0,47,12,100];
+      const money=outcomes[Math.floor(Math.random()*outcomes.length)];
+      action("search",20,{energy:-5,food:-1},money?2:1,
+        money?"Ты нашёл "+money+" ₽.":"Ничего полезного найти не удалось.");
+      s.money+=money;
+      if(s.money>=100 && !s.flags.first100){
+        s.flags.first100=true;setGoal(1);addXP(20);
+        addLog("Цель выполнена: первые 100 ₽. Теперь нужно поесть.");
+      }
+      saveGame(true);render();
+    }]);
+    a.push(["🚶 Осмотреть вокзал","10 мин · −2 энергии",()=>{
+      if(s.flags.stationSeen){addLog("Ты уже всё здесь осмотрел.");return;}
+      s.flags.stationSeen=true;
+      action("look",10,{energy:-2,food:-1},2,"Ты осматриваешь вокзал. Вокруг люди спешат по своим делам.");
+      setGoal(0);
+    }]);
+  }
+  if(s.goal===1){
+    a.push(["🍲 Купить суп","2 мин · 110 ₽",()=>{
+      if(s.money<110){addLog("Недостаточно денег.");return;}
+      s.money-=110; action("food",2,{food:35,energy:2},2,"Ты покупаешь горячий суп. Не роскошь, но сегодня сойдёт.");
+      if(!s.flags.firstMeal){s.flags.firstMeal=true;setGoal(2);addXP(10);addLog("Новая цель: найти способ заработать деньги.");}
+    }]);
+  }
+  if(s.goal===2){
+    a.push(["🧹 Разовая подработка","60 мин · −12 энергии","",]);
+    a[a.length-1][2]=()=>{
+      const pay=260+Math.floor(Math.random()*141);
+      action("job",60,{energy:-12,food:-5},8,"Ты отработал час на разовой подработке и получил "+pay+" ₽.");
+      s.money+=pay;saveGame(true);render();
+      if(!s.flags.job1){s.flags.job1=true;setGoal(3);addXP(15);addLog("Ты понял: постоянная работа принесёт больше.");}
+    };
+    a.push(["📦 Погрузка","120 мин · −25 энергии",()=>{
+      const pay=650+Math.floor(Math.random()*201);
+      action("job",120,{energy:-25,food:-10},15,"Тяжёлая погрузка. Тяжело, зато "+pay+" ₽.");
+      s.money+=pay;saveGame(true);render();
+    }]);
+    a.push(["📄 Узнать про документы","20 мин · −3 энергии",()=>{
+      action("docs",20,{energy:-3,food:-1},5,"Без документов нормальную работу найти будет трудно. Нужно разобраться с восстановлением.");
+      if(!s.flags.docs){s.flags.docs=true;setGoal(3);addLog("Новая цепочка: «Вернуть себе имя».");}
+    }]);
+  }
+  if(s.goal===3){
+    a.push(["📄 Начать восстановление документов","30 мин · 80 ₽",()=>{
+      if(s.money<80){addLog("Нужно ещё немного денег на оформление.");return;}
+      s.money-=80; action("docs",30,{energy:-5,food:-2},12,"Ты узнаёшь порядок восстановления документов.");
+      s.flags.docsStarted=true;setGoal(4);addLog("Продолжение цепочки откроется в следующем дне.");
+    }]);
+  }
+  a.push(["😴 Поспать 4 часа","перемотка времени",()=>{
+    addTime(240);s.energy=clamp(s.energy+38);s.health=clamp(s.health+3);saveGame(true);
+    addLog("Ты поспал 4 часа. Вокзал шумный, сон тяжёлый.");
+  }]);
+  a.push(["😴 Поспать 7 часов","перемотка времени",()=>{
+    addTime(420);s.energy=clamp(s.energy+62);s.health=clamp(s.health+5);saveGame(true);
+    addLog("Ты поспал 7 часов. Утро уже близко.");
+  }]);
+  return a;
+}
+function renderActions(){
+  const el=document.getElementById("actions");el.innerHTML="";
+  actions().forEach(x=>{
+    const b=document.createElement("button");b.textContent=x[0];
+    b.onclick=x[2];el.appendChild(b);
+  });
+}
+function render(){
+  document.getElementById("money").textContent=fmtMoney(s.money);
+  document.getElementById("level").textContent=s.level;
+  document.getElementById("xp").textContent=s.xp;
+  document.getElementById("clock").textContent=timeText();
+  document.getElementById("day").textContent="День "+s.day;
+  for(const [id,key] of [["health","health"],["energy","energy"],["food","food"],["craving","craving"]]){
+    document.getElementById(id+"V").textContent=Math.round(s[key]);
+    document.getElementById(id+"B").style.width=s[key]+"%";
+  }
+  document.getElementById("goal").textContent=[
+    "Найти способ получить первые 100 ₽.",
+    "Найти еду и восстановить силы.",
+    "Найти способ заработать деньги.",
+    "Разобраться с восстановлением документов.",
+    "Продолжение цепочки будет завтра."
+  ][s.goal]||"Продолжать жить и искать возможности.";
+  document.getElementById("log").innerHTML=s.log.map(x=>`<div class="event"><b>${x.t}</b>${x.text}</div>`).join("");
+  renderActions();
+}
+function showMap(){
+  openModal("Карта Мурманска",`<p><b>Открыто:</b> Вокзал</p><p>🏪 Магазин — скоро</p><p>🍲 Столовая — открыта</p><p>🧑‍⚕️ Больница — неизвестно</p><p>💼 Работа — открывается по сюжету</p>`);
+}
+function showInventory(){
+  openModal("Инвентарь",s.inventory.length?("<p>"+s.inventory.join("</p><p>")+"</p>"):"<p>Пусто.</p>");
+}
+function openModal(t,b){document.getElementById("modalTitle").textContent=t;document.getElementById("modalBody").innerHTML=b;document.getElementById("modal").classList.add("open")}
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+loadGame();
+if(!s.log.length){
+  addLog("06:37. Николай просыпается на вокзале.");
+  addLog("Охранник просит его покинуть здание.");
+  addXP(2);
+}
+render();
+setInterval(()=>{addTime(1);render();saveGame(true)},60000);
+</script>
+</body>
+</html>
