@@ -6,290 +6,389 @@
 <title>НИЗШАЯ ЖИЗНЬ: Путь к высшей</title>
 <style>
 :root{
-  --paper:#e8dcc3; --paper2:#d8c8a7; --ink:#29251f; --muted:#6c6253;
-  --line:#8e8068; --accent:#604c37; --danger:#7b3e35;
+  --bg:#1e1b17; --paper:#e9dec7; --paper2:#d8c8a8; --ink:#28231d;
+  --muted:#6e6352; --line:#8e7d62; --accent:#5d4934; --accent2:#7b674d;
+  --danger:#743f37; --good:#4f674c; --shadow:#0008;
 }
 *{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink)}
 body{
-  margin:0;background:#211f1b;color:var(--ink);
   font-family:Georgia,"Times New Roman",serif;
-  min-height:100vh;
+  background:
+    radial-gradient(circle at 20% 10%,#ffffff08 0 2px,transparent 3px),
+    radial-gradient(circle at 80% 70%,#00000012 0 1px,transparent 2px),
+    #1e1b17;
 }
-body:before{
-  content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;
-  background-image:radial-gradient(#000 0.6px,transparent .7px);
+button{font:inherit;color:inherit}
+button:active{transform:translateY(1px)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.app{width:min(680px,100%);margin:auto;padding:10px}
+.paper{
+  min-height:calc(100vh - 20px);
+  background:
+    linear-gradient(90deg,#00000008 1px,transparent 1px),
+    linear-gradient(#00000005 1px,transparent 1px),
+    linear-gradient(135deg,var(--paper),#f0e6d2 48%,var(--paper2));
+  background-size:100% 100%,100% 100%,100% 100%;
+  box-shadow:0 0 40px #000b;
+  border:1px solid #7b6c55;
+  position:relative;overflow:hidden;
+}
+.paper:after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;
+  background-image:radial-gradient(#000 0.55px,transparent .7px);
   background-size:5px 5px;
 }
-.app{max-width:620px;margin:auto;min-height:100vh;padding:14px}
-.paper{
-  min-height:calc(100vh - 28px);padding:18px;
-  background:linear-gradient(135deg,var(--paper),#efe5cf 45%,var(--paper2));
-  box-shadow:0 0 35px #0009;position:relative;
+.ui{position:relative;z-index:1;padding:12px}
+.header{
+  display:grid;grid-template-columns:1fr auto;gap:10px;
+  border-bottom:2px solid var(--line);padding-bottom:9px
 }
-.header{border-bottom:2px solid var(--line);padding-bottom:12px;margin-bottom:14px}
-.title{font-size:22px;letter-spacing:1px;font-weight:800}
-.subtitle{font-size:12px;color:var(--muted);margin-top:4px}
-.top{display:flex;justify-content:space-between;gap:12px;margin:12px 0}
-.money{font-size:22px;font-weight:800}.time{text-align:right;color:var(--muted)}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.stat{border:1px solid var(--line);padding:8px;background:#fff2;border-radius:5px}
-.statline{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
-.bar{height:7px;background:#b7aa90;border:1px solid #857862}
-.fill{height:100%;width:50%;background:var(--accent)}
+.name{font-size:19px;font-weight:900;letter-spacing:.5px}
+.sub{font-size:11px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+.clock{text-align:right;font-size:13px;color:var(--muted)}
+.clock b{font-size:18px;color:var(--ink)}
+.profile{
+  margin-top:10px;border:1px solid var(--line);background:#00000008;padding:9px;
+  display:grid;grid-template-columns:1fr 1fr;gap:7px
+}
+.money{font-size:22px;font-weight:900}
+.xp{font-size:11px;color:var(--muted);margin-top:2px}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.stat{border:1px solid #9a896d;padding:6px;background:#ffffff18}
+.statline{display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px}
+.bar{height:6px;background:#b6a78c;border:1px solid #8b7b61}
+.fill{height:100%;background:var(--accent)}
 .fill.bad{background:var(--danger)}
-.section{margin-top:16px}
-.section h3{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;border-bottom:1px solid var(--line);padding-bottom:5px}
-.log{
-  min-height:115px;max-height:230px;overflow:auto;
-  border:1px solid var(--line);padding:11px;background:#00000008;
-  font-size:14px;line-height:1.45;
+
+.panel{
+  margin-top:10px;border:1px solid var(--line);background:#ffffff16;
+  min-height:270px;padding:10px
 }
-.event{margin-bottom:10px}.event b{display:block}
-.actions{display:grid;gap:8px}
-button{
-  width:100%;border:1px solid #665844;background:#d2c19f;color:var(--ink);
-  padding:12px 10px;font:inherit;font-weight:700;border-radius:4px;
-  box-shadow:0 2px 0 #786b56;cursor:pointer
+.panel-title{
+  display:flex;justify-content:space-between;align-items:end;
+  border-bottom:1px solid var(--line);padding-bottom:7px;margin-bottom:9px
 }
-button:active{transform:translateY(1px);box-shadow:none}
-button:disabled{opacity:.45;cursor:not-allowed}
-.small{font-size:12px;color:var(--muted);font-weight:400}
-.nav{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:14px}
-.nav button{font-size:12px;padding:10px 5px}
+.panel-title h2{font-size:16px;margin:0}
+.panel-title span{font-size:10px;color:var(--muted);text-transform:uppercase}
+.content{font-size:14px;line-height:1.45}
+.story-preview{
+  border-left:3px solid var(--accent);padding:8px 10px;background:#00000008;margin-bottom:9px
+}
+.event-list{max-height:180px;overflow:auto}
+.event{padding:7px 0;border-bottom:1px dotted #9b8b70}
+.event b{font-size:11px;color:var(--muted);margin-right:5px}
+.cardgrid{display:grid;gap:7px}
+.action-card{
+  border:1px solid var(--line);background:#d7c7a7;padding:9px;text-align:left;
+  box-shadow:0 2px 0 #7c6d57;cursor:pointer;width:100%
+}
+.action-card strong{display:block;font-size:14px}
+.action-card small{display:block;color:var(--muted);margin-top:3px;font-size:11px}
+.action-card .tag{float:right;border:1px solid #8d7c61;padding:2px 5px;font-size:10px}
+.notice{padding:9px;border-left:3px solid var(--accent);background:#00000008;font-size:12px}
+.nav{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:9px;
+  border-top:1px solid var(--line);padding-top:8px
+}
+.nav button{
+  min-height:50px;border:1px solid var(--line);background:#d3c19e;
+  padding:5px 3px;font-size:10px;font-weight:700;cursor:pointer
+}
+.nav button.active{background:#a99573;box-shadow:inset 0 0 0 2px #5f4c37}
+.icon{font-size:17px;display:block;margin-bottom:2px}
 .modal{
-  position:fixed;inset:0;background:#0009;display:none;align-items:flex-end;justify-content:center;
+  position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;
+  padding:12px;z-index:20
 }
 .modal.open{display:flex}
-.card{
-  width:min(620px,100%);background:var(--paper);padding:18px;
-  border-top:3px solid var(--accent);box-shadow:0 -10px 35px #0008
+.story-card{
+  width:min(640px,100%);max-height:92vh;overflow:auto;
+  background:linear-gradient(135deg,#eee2ca,#d9c8a5);
+  border:1px solid #77664e;box-shadow:0 15px 50px #000c;
+  position:relative
 }
-.card h2{margin-top:0}
-.notice{padding:10px;border-left:3px solid var(--accent);background:#0000000a;font-size:13px}
-.xp{font-size:12px;color:var(--muted)}
-@media(min-width:560px){.actions{grid-template-columns:1fr 1fr}}
+.story-head{padding:12px;border-bottom:2px solid var(--line)}
+.story-head .chapter{font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.story-head h2{margin:4px 0 0;font-size:22px}
+.story-body{padding:14px}
+.story-body p{margin:0 0 11px;line-height:1.55}
+.story-choices{display:grid;gap:7px;padding:0 14px 14px}
+.choice{
+  width:100%;text-align:left;padding:12px;border:1px solid var(--line);
+  background:#cdbb99;box-shadow:0 2px 0 #776852;cursor:pointer
+}
+.choice strong{display:block}.choice small{display:block;color:var(--muted);margin-top:3px}
+.close{position:absolute;right:8px;top:8px;border:0;background:transparent;font-size:22px;cursor:pointer}
+.badge{display:inline-block;border:1px solid var(--line);padding:2px 5px;font-size:10px;margin-right:4px}
+.empty{color:var(--muted);font-style:italic}
+@media(max-width:420px){
+  .ui{padding:9px}.name{font-size:16px}.money{font-size:19px}
+  .nav button{font-size:9px}.icon{font-size:15px}.panel{min-height:250px}
+}
 </style>
 </head>
 <body>
 <div class="app"><main class="paper">
+<div class="ui">
   <header class="header">
-    <div class="title">НИЗШАЯ ЖИЗНЬ</div>
-    <div class="subtitle">ПУТЬ К ВЫСШЕЙ · ПРОТОТИП v0.1</div>
+    <div>
+      <div class="name">Рублёв Николай Николаевич</div>
+      <div class="sub">НИЗШАЯ ЖИЗНЬ · ПУТЬ К ВЫСШЕЙ</div>
+    </div>
+    <div class="clock"><b id="clock">06:37</b><br><span id="day">День 1 · Пн</span></div>
   </header>
 
-  <div class="top">
+  <section class="profile">
     <div>
       <div class="money" id="money">0 ₽</div>
       <div class="xp">Уровень <b id="level">1</b> · <span id="xp">0</span>/100 XP</div>
     </div>
-    <div class="time"><b id="clock">06:37</b><br><span id="day">День 1 · Понедельник</span></div>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><div class="statline"><span>❤️ Здоровье</span><b id="healthV">72</b></div><div class="bar"><div class="fill" id="healthB"></div></div></div>
-    <div class="stat"><div class="statline"><span>⚡ Энергия</span><b id="energyV">54</b></div><div class="bar"><div class="fill" id="energyB"></div></div></div>
-    <div class="stat"><div class="statline"><span>🍽 Сытость</span><b id="foodV">32</b></div><div class="bar"><div class="fill" id="foodB"></div></div></div>
-    <div class="stat"><div class="statline"><span>Тяга</span><b id="cravingV">74</b></div><div class="bar"><div class="fill bad" id="cravingB"></div></div></div>
-  </div>
-
-  <section class="section">
-    <h3>События</h3>
-    <div class="log" id="log"></div>
+    <div class="statgrid">
+      <div class="stat"><div class="statline"><span>❤️ Здоровье</span><b id="healthV">72</b></div><div class="bar"><div class="fill" id="healthB"></div></div></div>
+      <div class="stat"><div class="statline"><span>⚡ Энергия</span><b id="energyV">54</b></div><div class="bar"><div class="fill" id="energyB"></div></div></div>
+      <div class="stat"><div class="statline"><span>🍽 Сытость</span><b id="foodV">32</b></div><div class="bar"><div class="fill" id="foodB"></div></div></div>
+      <div class="stat"><div class="statline"><span>Тяга</span><b id="cravingV">74</b></div><div class="bar"><div class="fill bad" id="cravingB"></div></div></div>
+    </div>
   </section>
 
-  <section class="section">
-    <h3 id="goalTitle">Текущая цель</h3>
-    <div class="notice" id="goal">Найти способ получить первые 100 ₽.</div>
+  <section class="panel">
+    <div class="panel-title">
+      <h2 id="panelTitle">История</h2>
+      <span id="panelSub">главное</span>
+    </div>
+    <div id="panelContent" class="content"></div>
   </section>
 
-  <section class="section">
-    <h3>Действия</h3>
-    <div class="actions" id="actions"></div>
-  </section>
-
-  <div class="nav">
-    <button onclick="showMap()">🗺 Карта</button>
-    <button onclick="showInventory()">🎒 Инвентарь</button>
-    <button onclick="saveGame()">💾 Сохранить</button>
-  </div>
+  <nav class="nav">
+    <button data-tab="story" onclick="setTab('story')"><span class="icon">📜</span>История</button>
+    <button data-tab="work" onclick="setTab('work')"><span class="icon">💼</span>Заработок</button>
+    <button data-tab="shop" onclick="setTab('shop')"><span class="icon">🏪</span>Магазин</button>
+    <button data-tab="quests" onclick="setTab('quests')"><span class="icon">✦</span>Задания</button>
+    <button data-tab="more" onclick="setTab('more')"><span class="icon">☰</span>Ещё</button>
+  </nav>
+</div>
 </main></div>
 
-<div class="modal" id="modal">
-  <div class="card">
-    <h2 id="modalTitle"></h2>
-    <div id="modalBody"></div>
-    <button style="margin-top:12px" onclick="closeModal()">Закрыть</button>
+<div class="modal" id="storyModal">
+  <div class="story-card">
+    <button class="close" onclick="closeStory()">×</button>
+    <div class="story-head"><div class="chapter" id="storyChapter">ГЛАВА I · ПЕРВЫЙ ДЕНЬ</div><h2 id="storyTitle"></h2></div>
+    <div class="story-body" id="storyBody"></div>
+    <div class="story-choices" id="storyChoices"></div>
   </div>
 </div>
 
 <script>
-const KEY="nizhnyaya_zhizn_v01";
+const KEY="nizhshaya_zhizn_v02";
+const DAYS=["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"];
 let s={
   money:0,health:72,energy:54,food:32,craving:74,dependence:81,
-  xp:0,level:1,day:1,minutes:397,goal:0,
-  inventory:[],unlocked:["Вокзал"],flags:{},
-  log:[]
+  xp:0,level:1,day:1,minutes:397,tab:"story",
+  inventory:[],flags:{},log:[],seenStories:{}
 };
 
 function loadGame(){
-  try{const x=JSON.parse(localStorage.getItem(KEY)); if(x) s={...s,...x};}catch(e){}
+  try{const x=JSON.parse(localStorage.getItem(KEY));if(x)s={...s,...x,flags:{...s.flags,...(x.flags||{})},seenStories:{...s.seenStories,...(x.seenStories||{})}}}catch(e){}
 }
-function saveGame(silent=false){
+function saveGame(){
   localStorage.setItem(KEY,JSON.stringify(s));
-  if(!silent) addLog("Игра сохранена.");
 }
 function fmtMoney(n){return Math.floor(n).toLocaleString("ru-RU")+" ₽"}
 function clamp(n){return Math.max(0,Math.min(100,n))}
-function timeText(){
-  let h=Math.floor(s.minutes/60)%24,m=s.minutes%60;
-  return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
-}
+function timeText(){let h=Math.floor(s.minutes/60)%24,m=s.minutes%60;return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")}
+function addLog(text){s.log.unshift({t:timeText(),text});s.log=s.log.slice(0,35)}
 function addTime(min){
   s.minutes+=min;
-  while(s.minutes>=1440){s.minutes-=1440;s.day++;addLog("Начался новый день.");}
-  // slow passive needs; deliberately capped to avoid runaway depletion
+  while(s.minutes>=1440){s.minutes-=1440;s.day++;addLog("Начался новый день.")}
   const hours=min/60;
-  s.food=clamp(s.food-hours*1.2);
-  s.craving=clamp(s.craving+hours*1.0);
-  if(s.food<8) s.health=clamp(s.health-hours*.35);
-  if(s.energy<5) s.health=clamp(s.health-hours*.2);
+  s.food=clamp(s.food-hours*1.15);
+  s.craving=clamp(s.craving+hours*.9);
+  if(s.food<8)s.health=clamp(s.health-hours*.28);
+  if(s.energy<5)s.health=clamp(s.health-hours*.18);
 }
 function addXP(n){
   s.xp+=n;
-  while(s.xp>=100){
-    s.xp-=100;s.level++;
-    addLog("Новый уровень: "+s.level+"!");
-  }
+  while(s.xp>=100){s.xp-=100;s.level++;addLog("Новый уровень: "+s.level+".")}
 }
-function addLog(text){
-  s.log.unshift({t:timeText(),text});
-  s.log=s.log.slice(0,30);
-  render();
+function spend(cost){
+  if(s.money<cost)return false;s.money-=cost;return true;
 }
-function change(delta){
-  for(const k in delta){
-    if(["health","energy","food","craving"].includes(k)) s[k]=clamp(s[k]+delta[k]);
-    else s[k]+=delta[k];
-  }
+function doAction({minutes=0,money=0,health=0,energy=0,food=0,craving=0,xp=0,msg}){
+  addTime(minutes);
+  s.money+=money;
+  s.health=clamp(s.health+health);
+  s.energy=clamp(s.energy+energy);
+  s.food=clamp(s.food+food);
+  s.craving=clamp(s.craving+craving);
+  addXP(xp);
+  if(msg)addLog(msg);
+  saveGame();render();
 }
-function action(name,minutes,delta,xp,msg,condition=()=>true){
-  if(!condition()) return;
-  addTime(minutes); change(delta); addXP(xp); addLog(msg);
-  saveGame(true); render();
-}
-function setGoal(n){s.goal=n;render()}
-
-function actions(){
-  const a=[];
-  if(s.goal===0){
-    a.push(["🔎 Поискать деньги","20 мин · −5 энергии",()=>{
-      // limited daily activity
-      const used=s.flags.searchDay===s.day?(s.flags.searchCount||0):0;
-      if(used>=6){addLog("Ты уже обыскал всё, что мог найти здесь сегодня.");return;}
-      s.flags.searchDay=s.day;s.flags.searchCount=used+1;
-      const outcomes=[20,35,0,47,12,100];
-      const money=outcomes[Math.floor(Math.random()*outcomes.length)];
-      action("search",20,{energy:-5,food:-1},money?2:1,
-        money?"Ты нашёл "+money+" ₽.":"Ничего полезного найти не удалось.");
-      s.money+=money;
-      if(s.money>=100 && !s.flags.first100){
-        s.flags.first100=true;setGoal(1);addXP(20);
-        addLog("Цель выполнена: первые 100 ₽. Теперь нужно поесть.");
-      }
-      saveGame(true);render();
-    }]);
-    a.push(["🚶 Осмотреть вокзал","10 мин · −2 энергии",()=>{
-      if(s.flags.stationSeen){addLog("Ты уже всё здесь осмотрел.");return;}
-      s.flags.stationSeen=true;
-      action("look",10,{energy:-2,food:-1},2,"Ты осматриваешь вокзал. Вокруг люди спешат по своим делам.");
-      setGoal(0);
-    }]);
-  }
-  if(s.goal===1){
-    a.push(["🍲 Купить суп","2 мин · 110 ₽",()=>{
-      if(s.money<110){addLog("Недостаточно денег.");return;}
-      s.money-=110; action("food",2,{food:35,energy:2},2,"Ты покупаешь горячий суп. Не роскошь, но сегодня сойдёт.");
-      if(!s.flags.firstMeal){s.flags.firstMeal=true;setGoal(2);addXP(10);addLog("Новая цель: найти способ заработать деньги.");}
-    }]);
-  }
-  if(s.goal===2){
-    a.push(["🧹 Разовая подработка","60 мин · −12 энергии","",]);
-    a[a.length-1][2]=()=>{
-      const pay=260+Math.floor(Math.random()*141);
-      action("job",60,{energy:-12,food:-5},8,"Ты отработал час на разовой подработке и получил "+pay+" ₽.");
-      s.money+=pay;saveGame(true);render();
-      if(!s.flags.job1){s.flags.job1=true;setGoal(3);addXP(15);addLog("Ты понял: постоянная работа принесёт больше.");}
-    };
-    a.push(["📦 Погрузка","120 мин · −25 энергии",()=>{
-      const pay=650+Math.floor(Math.random()*201);
-      action("job",120,{energy:-25,food:-10},15,"Тяжёлая погрузка. Тяжело, зато "+pay+" ₽.");
-      s.money+=pay;saveGame(true);render();
-    }]);
-    a.push(["📄 Узнать про документы","20 мин · −3 энергии",()=>{
-      action("docs",20,{energy:-3,food:-1},5,"Без документов нормальную работу найти будет трудно. Нужно разобраться с восстановлением.");
-      if(!s.flags.docs){s.flags.docs=true;setGoal(3);addLog("Новая цепочка: «Вернуть себе имя».");}
-    }]);
-  }
-  if(s.goal===3){
-    a.push(["📄 Начать восстановление документов","30 мин · 80 ₽",()=>{
-      if(s.money<80){addLog("Нужно ещё немного денег на оформление.");return;}
-      s.money-=80; action("docs",30,{energy:-5,food:-2},12,"Ты узнаёшь порядок восстановления документов.");
-      s.flags.docsStarted=true;setGoal(4);addLog("Продолжение цепочки откроется в следующем дне.");
-    }]);
-  }
-  a.push(["😴 Поспать 4 часа","перемотка времени",()=>{
-    addTime(240);s.energy=clamp(s.energy+38);s.health=clamp(s.health+3);saveGame(true);
-    addLog("Ты поспал 4 часа. Вокзал шумный, сон тяжёлый.");
-  }]);
-  a.push(["😴 Поспать 7 часов","перемотка времени",()=>{
-    addTime(420);s.energy=clamp(s.energy+62);s.health=clamp(s.health+5);saveGame(true);
-    addLog("Ты поспал 7 часов. Утро уже близко.");
-  }]);
-  return a;
-}
-function renderActions(){
-  const el=document.getElementById("actions");el.innerHTML="";
-  actions().forEach(x=>{
-    const b=document.createElement("button");b.textContent=x[0];
-    b.onclick=x[2];el.appendChild(b);
+function showStory(id,chapter,title,body,choices){
+  if(s.seenStories[id])return;
+  document.getElementById("storyChapter").textContent=chapter;
+  document.getElementById("storyTitle").textContent=title;
+  document.getElementById("storyBody").innerHTML=body;
+  const box=document.getElementById("storyChoices");box.innerHTML="";
+  choices.forEach(c=>{
+    const b=document.createElement("button");b.className="choice";
+    b.innerHTML="<strong>"+c.title+"</strong>"+(c.desc?"<small>"+c.desc+"</small>":"");
+    b.onclick=()=>{s.seenStories[id]=true;c.fn();closeStory();saveGame();render()};
+    box.appendChild(b);
   });
+  document.getElementById("storyModal").classList.add("open");
 }
+function closeStory(){document.getElementById("storyModal").classList.remove("open")}
+
+function setTab(tab){s.tab=tab;saveGame();render()}
+
 function render(){
   document.getElementById("money").textContent=fmtMoney(s.money);
   document.getElementById("level").textContent=s.level;
   document.getElementById("xp").textContent=s.xp;
   document.getElementById("clock").textContent=timeText();
-  document.getElementById("day").textContent="День "+s.day;
+  document.getElementById("day").textContent="День "+s.day+" · "+DAYS[(s.day-1)%7].slice(0,2);
   for(const [id,key] of [["health","health"],["energy","energy"],["food","food"],["craving","craving"]]){
     document.getElementById(id+"V").textContent=Math.round(s[key]);
     document.getElementById(id+"B").style.width=s[key]+"%";
   }
-  document.getElementById("goal").textContent=[
-    "Найти способ получить первые 100 ₽.",
-    "Найти еду и восстановить силы.",
-    "Найти способ заработать деньги.",
-    "Разобраться с восстановлением документов.",
-    "Продолжение цепочки будет завтра."
-  ][s.goal]||"Продолжать жить и искать возможности.";
-  document.getElementById("log").innerHTML=s.log.map(x=>`<div class="event"><b>${x.t}</b>${x.text}</div>`).join("");
-  renderActions();
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===s.tab));
+  renderPanel();
+}
+function renderPanel(){
+  const title=document.getElementById("panelTitle"),sub=document.getElementById("panelSub"),c=document.getElementById("panelContent");
+  if(s.tab==="story"){
+    title.textContent="История";sub.textContent="главное";
+    const last=s.log.slice(0,7).map(x=>`<div class="event"><b>${x.t}</b>${x.text}</div>`).join("");
+    c.innerHTML=`
+      <div class="story-preview"><b>Текущая ситуация</b><br>
+      Ты на улицах Мурманска. У тебя нет дома, работы и документов. Но впервые за долгое время есть одна вещь — план.</div>
+      <div class="notice"><b>Следующий сюжетный шаг:</b> ${currentGoal()}</div>
+      <h3 style="font-size:12px;border-bottom:1px solid var(--line);padding-bottom:5px">Последние события</h3>
+      <div class="event-list">${last||'<span class="empty">Пока ничего не произошло.</span>'}</div>`;
+  }else if(s.tab==="work"){
+    title.textContent="Заработок";sub.textContent="работа и деньги";
+    const jobs=[
+      {name:"Разовая подработка",desc:"1 час · простая работа без документов",pay:"180–260 ₽",need:10,mins:60,food:-5,xp:7},
+      {name:"Погрузка",desc:"2 часа · тяжелее, но платят больше",pay:"600–850 ₽",need:25,mins:120,food:-10,xp:14}
+    ];
+    c.innerHTML='<div class="cardgrid">'+jobs.map((j,i)=>`
+      <button class="action-card" onclick="doJob(${i})" ${s.energy<j.need?'disabled':''}>
+        <span class="tag">${j.pay}</span><strong>${j.name}</strong><small>${j.desc} · −${j.need} энергии · −${Math.abs(j.food)} сытости</small>
+      </button>`).join("")+
+      `<button class="action-card" onclick="learnDocuments()"><strong>📄 Разобраться с документами</strong><small>20 минут · −3 энергии · открывает путь к нормальной работе</small></button>
+      <div class="notice">Подработки можно повторять, но они занимают время и силы. Бесконечной бесплатной фарм-тапалки здесь не будет.</div>
+      </div>`;
+  }else if(s.tab==="shop"){
+    title.textContent="Магазин";sub.textContent="еда и необходимые вещи";
+    const items=[
+      {name:"Хлеб",price:60,food:18},
+      {name:"Лапша быстрого приготовления",price:70,food:22},
+      {name:"Суп",price:110,food:35},
+      {name:"Сытный горячий обед",price:280,food:55}
+    ];
+    c.innerHTML='<div class="cardgrid">'+items.map((x,i)=>`
+      <button class="action-card" onclick="buyFood(${i})" ${s.money<x.price?'disabled':''}>
+        <span class="tag">${x.price} ₽</span><strong>${x.name}</strong><small>+${x.food} сытости · 2 минуты</small>
+      </button>`).join("")+
+      `<div class="notice">Цены пока тестовые. Экономику будем балансировать по реальному прохождению.</div></div>`;
+  }else if(s.tab==="quests"){
+    title.textContent="Задания";sub.textContent="сюжет";
+    c.innerHTML=`
+      <div class="notice"><b>Главная линия</b><br>${currentGoal()}</div>
+      <div style="margin-top:9px">
+        <span class="badge">Глава I</span><span class="badge">Мурманск</span>
+      </div>
+      <div class="cardgrid" style="margin-top:9px">
+        <div class="action-card"><strong>Вернуть себе имя</strong><small>${s.flags.docsStarted?"Начато":"Пока закрыто: нужны первые деньги и информация о документах."}</small></div>
+        <div class="action-card"><strong>Пережить первый день</strong><small>Основная цель первой главы.</small></div>
+      </div>`;
+  }else{
+    title.textContent="Ещё";sub.textContent="интерфейс";
+    c.innerHTML=`
+      <div class="cardgrid">
+        <button class="action-card" onclick="showInventory()"><strong>🎒 Инвентарь</strong><small>Вещи, которые у тебя есть.</small></button>
+        <button class="action-card" onclick="showMap()"><strong>🗺 Карта</strong><small>Доступные места Мурманска.</small></button>
+        <button class="action-card" onclick="saveGame();addLog('Игра сохранена.');render()"><strong>💾 Сохранить</strong><small>Сохранение в памяти браузера.</small></button>
+        <div class="notice">Версия v0.2. Это уже каркас интерфейса; дальше добавим нормальную карту, достижения, больше сюжетных сцен и визуальные ассеты.</div>
+      </div>`;
+  }
+}
+function currentGoal(){
+  if(!s.flags.first100)return"Найти первые 100 ₽.";
+  if(!s.flags.firstMeal)return"Найти еду и восстановить силы.";
+  if(!s.flags.docs)return"Найти способ заработать и узнать про документы.";
+  if(!s.flags.docsStarted)return"Начать восстановление документов.";
+  return"Продолжить цепочку восстановления документов.";
+}
+function doJob(i){
+  const jobs=[
+    {pay:180+Math.floor(Math.random()*81),need:10,mins:60,food:-5,xp:7,name:"разовой подработке"},
+    {pay:600+Math.floor(Math.random()*251),need:25,mins:120,food:-10,xp:14,name:"погрузке"}
+  ];
+  const j=jobs[i];
+  if(s.energy<j.need){addLog("Сейчас ты слишком вымотан для этой работы.");render();return}
+  doAction({minutes:j.mins,money:j.pay,energy:-j.need,food:j.food,xp:j.xp,msg:`Ты отработал и получил ${j.pay} ₽.`});
+  if(!s.flags.firstJob){s.flags.firstJob=true;addLog("Ты понял: даже небольшая работа может стать первым шагом.");}
+}
+function learnDocuments(){
+  if(s.energy<3){addLog("Слишком мало энергии.");render();return}
+  doAction({minutes:20,energy:-3,food:-1,xp:5,msg:"Ты узнаёшь, что без восстановления документов нормальную работу найти будет трудно."});
+  s.flags.docs=true;saveGame();render();
+  if(!s.seenStories.docsIntro){
+    setTimeout(()=>showStory("docsIntro","ГЛАВА I · ДОКУМЕНТЫ","Вернуть себе имя",
+      "<p>Несколько лет назад ты мог открыть кошелёк и достать паспорт. Теперь у тебя даже этого нет.</p><p>Сначала придётся восстановить документы. И это будет стоить времени и денег.</p>",
+      [{title:"Ладно. Начать с малого.",desc:"Продолжить поиски заработка.",fn:()=>{}}]),200);
+  }
+}
+function buyFood(i){
+  const items=[
+    {name:"Хлеб",price:60,food:18},{name:"Лапша быстрого приготовления",price:70,food:22},
+    {name:"Суп",price:110,food:35},{name:"Сытный горячий обед",price:280,food:55}
+  ];
+  const x=items[i];
+  if(!spend(x.price)){addLog("Не хватает денег.");render();return}
+  doAction({minutes:2,food:x.food,xp:2,msg:`Ты купил: ${x.name}.`});
+  if(!s.flags.firstMeal){
+    s.flags.firstMeal=true;saveGame();
+    setTimeout(()=>showStory("firstMeal","ГЛАВА I · ПЕРВЫЙ ДЕНЬ","Первые деньги",
+      "<p>Еда не решила твою жизнь. Но голова стала работать чуть яснее.</p><p>Теперь нужен следующий шаг — заработать достаточно, чтобы не возвращаться к нулю каждый вечер.</p>",
+      [{title:"Искать работу",desc:"Открыть раздел заработка.",fn:()=>setTab("work")},{title:"Сначала осмотреть город",desc:"Ничего не терять из виду.",fn:()=>setTab("story")}]),200);
+  }
 }
 function showMap(){
-  openModal("Карта Мурманска",`<p><b>Открыто:</b> Вокзал</p><p>🏪 Магазин — скоро</p><p>🍲 Столовая — открыта</p><p>🧑‍⚕️ Больница — неизвестно</p><p>💼 Работа — открывается по сюжету</p>`);
+  showStory("mapTemp","КАРТА · МУРМАНСК","Карта пока в разработке",
+    "<p><b>Открыто:</b> железнодорожный вокзал.</p><p>Дальше появятся улицы, магазин, столовая, больница, места работы и новые районы.</p>",
+    [{title:"Понятно",desc:"Вернуться в игру.",fn:()=>{}}]);
 }
 function showInventory(){
-  openModal("Инвентарь",s.inventory.length?("<p>"+s.inventory.join("</p><p>")+"</p>"):"<p>Пусто.</p>");
+  showStory("invTemp","ИНВЕНТАРЬ","Твои вещи",
+    s.inventory.length?("<p>"+s.inventory.join("</p><p>")+"</p>"):"<p>Пока пусто.</p>",
+    [{title:"Закрыть",desc:"",fn:()=>{}}]);
 }
-function openModal(t,b){document.getElementById("modalTitle").textContent=t;document.getElementById("modalBody").innerHTML=b;document.getElementById("modal").classList.add("open")}
-function closeModal(){document.getElementById("modal").classList.remove("open")}
+function firstStory(){
+  if(s.seenStories.opening)return;
+  setTimeout(()=>showStory("opening","ГЛАВА I · ПЕРВЫЙ ДЕНЬ","06:37",
+    "<p>Николай просыпается на скамье на мурманском вокзале. Несколько секунд он просто смотрит в потолок.</p><p>Слишком много всего произошло. Дом сгорел. Семья исчезла из его жизни. Друг погиб. Работа, деньги и документы остались в прошлом.</p><p>Охранник подходит ближе: пора уходить.</p>",
+    [
+      {title:"Осмотреть себя",desc:"Понять, что у тебя осталось.",fn:()=>{addLog("Ты проверяешь карманы. Денег нет.");addXP(3)}},
+      {title:"Осмотреть вокзал",desc:"Возможно, здесь найдётся какая-нибудь возможность.",fn:()=>{addLog("Ты внимательно осматриваешь вокзал.");addXP(3)}},
+      {title:"Просто выйти",desc:"Хватит сидеть. Нужно начинать.",fn:()=>{addLog("Ты выходишь на улицу.");addXP(3)}}
+    ]),300);
+}
 loadGame();
 if(!s.log.length){
   addLog("06:37. Николай просыпается на вокзале.");
   addLog("Охранник просит его покинуть здание.");
-  addXP(2);
+  saveGame();
 }
 render();
-setInterval(()=>{addTime(1);render();saveGame(true)},60000);
+firstStory();
+
+setInterval(()=>{
+  addTime(1);saveGame();render();
+},60000);
 </script>
 </body>
 </html>
