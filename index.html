@@ -122,10 +122,91 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .close{position:absolute;right:8px;top:8px;border:0;background:transparent;font-size:22px;cursor:pointer}
 .badge{display:inline-block;border:1px solid var(--line);padding:2px 5px;font-size:10px;margin-right:4px}
 .empty{color:var(--muted);font-style:italic}
+
+.minigame-wrap{padding:6px 0}
+.minigame-info{font-size:12px;color:var(--muted);margin-bottom:12px}
+.skillbar{height:34px;border:1px solid var(--line);background:#b7a789;position:relative;overflow:hidden}
+.skillzone{position:absolute;top:0;height:100%;background:#6c7b61aa}
+.skillmarker{position:absolute;top:-2px;width:5px;height:38px;background:#2d261e;box-shadow:0 0 0 1px #eee}
+.timerline{font-size:11px;color:var(--muted);margin-top:7px}
+.mini-buttons{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}
+.mini-btn{padding:11px;border:1px solid var(--line);background:#cdbb99;cursor:pointer}
+
 @media(max-width:420px){
   .ui{padding:9px}.name{font-size:16px}.money{font-size:19px}
   .nav button{font-size:9px}.icon{font-size:15px}.panel{min-height:250px}
 }
+
+/* ===== GHOST ARCHIVE UI ASSETS ===== */
+:root{
+  --paper:#e6d4b1;--paper2:#cbb58d;--ink:#28221b;--line:#665744;
+}
+body{
+  background:#171512 url("assets/textures/metal.png") center/720px 720px repeat;
+}
+.app{padding:8px;max-width:700px}
+.paper{
+  background:#e8d8ba url("assets/textures/paper.png") center/cover repeat;
+  border:0;
+  box-shadow:0 0 0 2px #1b1814,0 14px 45px #000d;
+}
+.paper:after{opacity:.07}
+.profile,.panel,.action-card,.nav button,.choice,.mini-btn{
+  background-color:transparent;
+}
+.panel{
+  background-image:url("assets/ui/panel.png");
+  background-size:100% 100%;
+  background-position:center;
+  background-repeat:no-repeat;
+  border:0;padding:18px;
+  filter:drop-shadow(0 3px 4px #0005);
+}
+.profile{
+  background-image:url("assets/ui/metal_panel.png");
+  background-size:100% 100%;background-repeat:no-repeat;
+  border:0;padding:15px;
+}
+.action-card,.choice,.mini-btn{
+  background-image:url("assets/ui/button.png");
+  background-size:100% 100%;background-repeat:no-repeat;
+  border:0;box-shadow:none;
+  padding:13px 15px;
+}
+.action-card:active,.choice:active,.mini-btn:active,.nav button:active{
+  background-image:url("assets/ui/button_pressed.png");
+  background-size:100% 100%;transform:translateY(1px);
+}
+.nav button{
+  background-image:url("assets/ui/button.png");
+  background-size:100% 100%;background-repeat:no-repeat;
+  border:0;
+}
+.nav button.active{
+  background-image:url("assets/ui/button_pressed.png");
+  background-size:100% 100%;box-shadow:none;
+}
+.story-card{
+  background:#e5d5b6 url("assets/ui/events.png") center/100% 100% no-repeat;
+  border:0;box-shadow:0 15px 50px #000c;
+}
+.story-head{border-bottom:0;padding:24px 24px 12px}
+.story-body{padding:14px 24px}
+.story-choices{padding:0 24px 24px}
+.story-preview{background:#0000000b;border-left-color:#5e4b38}
+.stat{background:#00000009;border-color:#806f57}
+.bar{background:#8d806a55;border-color:#655743}
+.fill{background:#4f4538}
+.notice{background:#00000009}
+/* 4x3 icon atlas: health, energy, food, craving / money, xp, work, shop / quests, map, sleep, settings */
+.icon-sprite{
+  display:inline-block;width:24px;height:24px;vertical-align:middle;margin-right:5px;
+  background-image:url("assets/sheets/icons.png");
+  background-size:400% 300%;background-repeat:no-repeat;
+}
+.icon-health{background-position:0 0}.icon-energy{background-position:33.333% 0}.icon-food{background-position:66.666% 0}.icon-craving{background-position:100% 0}
+.icon-money{background-position:0 50%}.icon-xp{background-position:33.333% 50%}.icon-work{background-position:66.666% 50%}.icon-shop{background-position:100% 50%}
+.icon-quests{background-position:0 100%}.icon-map{background-position:33.333% 100%}.icon-sleep{background-position:66.666% 100%}.icon-settings{background-position:100% 100%}
 </style>
 </head>
 <body>
@@ -184,7 +265,7 @@ const KEY="nizhshaya_zhizn_v02";
 const DAYS=["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"];
 let s={
   money:0,health:72,energy:54,food:32,craving:74,dependence:81,
-  xp:0,level:1,day:1,minutes:397,tab:"story",
+  xp:0,level:1,day:1,minutes:397,tab:"story",mini:null,
   inventory:[],flags:{},log:[],seenStories:{}
 };
 
@@ -207,9 +288,12 @@ function addTime(min){
   if(s.food<8)s.health=clamp(s.health-hours*.28);
   if(s.energy<5)s.health=clamp(s.health-hours*.18);
 }
+function xpNeed(){return 100 + (s.level-1)*35}
 function addXP(n){
   s.xp+=n;
-  while(s.xp>=100){s.xp-=100;s.level++;addLog("Новый уровень: "+s.level+".")}
+  while(s.xp>=xpNeed()){
+    s.xp-=xpNeed();s.level++;addLog("Новый уровень: "+s.level+".");
+  }
 }
 function spend(cost){
   if(s.money<cost)return false;s.money-=cost;return true;
@@ -223,6 +307,7 @@ function doAction({minutes=0,money=0,health=0,energy=0,food=0,craving=0,xp=0,msg
   s.craving=clamp(s.craving+craving);
   addXP(xp);
   if(msg)addLog(msg);
+  checkMilestones();
   saveGame();render();
 }
 function showStory(id,chapter,title,body,choices){
@@ -246,7 +331,7 @@ function setTab(tab){s.tab=tab;saveGame();render()}
 function render(){
   document.getElementById("money").textContent=fmtMoney(s.money);
   document.getElementById("level").textContent=s.level;
-  document.getElementById("xp").textContent=s.xp;
+  document.getElementById("xp").textContent=s.xp+"/"+xpNeed();
   document.getElementById("clock").textContent=timeText();
   document.getElementById("day").textContent="День "+s.day+" · "+DAYS[(s.day-1)%7].slice(0,2);
   for(const [id,key] of [["health","health"],["energy","energy"],["food","food"],["craving","craving"]]){
@@ -308,12 +393,25 @@ function renderPanel(){
     title.textContent="Ещё";sub.textContent="интерфейс";
     c.innerHTML=`
       <div class="cardgrid">
+        <button class="action-card" onclick="sleepMenu()"><strong>🛏 Отдых / сон</strong><small>Выбери, сколько часов проспать. Время проходит, энергия восстанавливается.</small></button>
         <button class="action-card" onclick="showInventory()"><strong>🎒 Инвентарь</strong><small>Вещи, которые у тебя есть.</small></button>
         <button class="action-card" onclick="showMap()"><strong>🗺 Карта</strong><small>Доступные места Мурманска.</small></button>
         <button class="action-card" onclick="saveGame();addLog('Игра сохранена.');render()"><strong>💾 Сохранить</strong><small>Сохранение в памяти браузера.</small></button>
         <div class="notice">Версия v0.2. Это уже каркас интерфейса; дальше добавим нормальную карту, достижения, больше сюжетных сцен и визуальные ассеты.</div>
       </div>`;
   }
+}
+
+function checkMilestones(){
+  if(!s.flags.first100 && s.money>=100){
+    s.flags.first100=true;
+    addLog("У тебя появились первые 100 ₽. Теперь главная задача — поесть.");
+    setTimeout(()=>showStory("first100","ГЛАВА I · ПЕРВЫЙ ДЕНЬ","Первые сто",
+      "<p>Сто рублей. Для кого-то — мелочь. Для тебя сейчас это доказательство, что день ещё можно вытянуть.</p><p>Но деньги быстро заканчиваются, если тратить их без плана.</p>",
+      [{title:"Сначала поесть",desc:"Открыть магазин.",fn:()=>setTab("shop")},
+       {title:"Сначала заработать ещё",desc:"Не останавливаться на первых ста рублях.",fn:()=>setTab("work")}]),250);
+  }
+  if(s.money>=110 && !s.flags.first100) { s.flags.first100=true; }
 }
 function currentGoal(){
   if(!s.flags.first100)return"Найти первые 100 ₽.";
@@ -324,13 +422,68 @@ function currentGoal(){
 }
 function doJob(i){
   const jobs=[
-    {pay:180+Math.floor(Math.random()*81),need:10,mins:60,food:-5,xp:7,name:"разовой подработке"},
-    {pay:600+Math.floor(Math.random()*251),need:25,mins:120,food:-10,xp:14,name:"погрузке"}
+    {name:"Разовая подработка",mins:60,need:10,food:-5,base:220,xp:7,type:"sequence"},
+    {name:"Погрузка",mins:120,need:25,food:-10,base:720,xp:14,type:"timing"}
   ];
   const j=jobs[i];
   if(s.energy<j.need){addLog("Сейчас ты слишком вымотан для этой работы.");render();return}
-  doAction({minutes:j.mins,money:j.pay,energy:-j.need,food:j.food,xp:j.xp,msg:`Ты отработал и получил ${j.pay} ₽.`});
-  if(!s.flags.firstJob){s.flags.firstJob=true;addLog("Ты понял: даже небольшая работа может стать первым шагом.");}
+  startMiniGame(j);
+}
+function startMiniGame(job){
+  s.mini={job,started:Date.now(),timeLeft:8,marker:0,dir:1,done:false,
+    seq:["A","C","B","D"].sort(()=>Math.random()-.5),pos:0};
+  document.getElementById("storyModal").classList.add("open");
+  document.getElementById("storyChapter").textContent="РАБОТА · ПРОВЕРКА НАВЫКА";
+  document.getElementById("storyTitle").textContent=job.name;
+  renderMiniGame();
+}
+function renderMiniGame(){
+  const m=s.mini;if(!m)return;
+  const body=document.getElementById("storyBody"), choices=document.getElementById("storyChoices");
+  if(m.job.type==="timing"){
+    body.innerHTML=`<div class="minigame-wrap">
+      <p>Нужно выполнить работу аккуратно и вовремя. Нажми <b>«Сделать»</b>, когда маркер попадёт в светлую зону.</p>
+      <div class="skillbar"><div class="skillzone" style="left:38%;width:24%"></div><div class="skillmarker" style="left:${m.marker}%"></div></div>
+      <div class="timerline">Осталось: <b>${Math.ceil(m.timeLeft)}</b> сек.</div>
+    </div>`;
+    choices.innerHTML=`<button class="choice" onclick="miniAction()">Сделать</button>`;
+  }else{
+    body.innerHTML=`<div class="minigame-wrap">
+      <p>Нажимай кнопки в правильном порядке. Ошибка снижает оплату.</p>
+      <div class="notice">Последовательность: <b>${m.seq.map((x,i)=>i<m.pos?"✓":x).join("  ")}</b></div>
+    </div>`;
+    choices.innerHTML=`<div class="mini-buttons">
+      <button class="mini-btn" onclick="seqPress('A')">A</button>
+      <button class="mini-btn" onclick="seqPress('B')">B</button>
+      <button class="mini-btn" onclick="seqPress('C')">C</button>
+      <button class="mini-btn" onclick="seqPress('D')">D</button>
+    </div>`;
+  }
+}
+function miniAction(){
+  if(!s.mini)return;
+  const m=s.mini, success=m.marker>=38&&m.marker<=62;
+  finishMini(success ? 1 : .18);
+}
+function seqPress(x){
+  if(!s.mini)return;
+  const m=s.mini;
+  if(x===m.seq[m.pos]){
+    m.pos++;
+    if(m.pos>=m.seq.length) finishMini(1);
+    else renderMiniGame();
+  }else{
+    finishMini(.12);
+  }
+}
+function finishMini(mult){
+  if(!s.mini)return;
+  const m=s.mini, job=m.job;
+  const pay=Math.max(20,Math.round(job.base*mult));
+  document.getElementById("storyModal").classList.remove("open");
+  s.mini=null;
+  doAction({minutes:job.mins,money:pay,energy:-job.need,food:job.food,xp:Math.max(2,Math.round(job.xp*mult)),
+    msg:`Ты закончил работу и получил ${pay} ₽.`});
 }
 function learnDocuments(){
   if(s.energy<3){addLog("Слишком мало энергии.");render();return}
@@ -339,7 +492,7 @@ function learnDocuments(){
   if(!s.seenStories.docsIntro){
     setTimeout(()=>showStory("docsIntro","ГЛАВА I · ДОКУМЕНТЫ","Вернуть себе имя",
       "<p>Несколько лет назад ты мог открыть кошелёк и достать паспорт. Теперь у тебя даже этого нет.</p><p>Сначала придётся восстановить документы. И это будет стоить времени и денег.</p>",
-      [{title:"Ладно. Начать с малого.",desc:"Продолжить поиски заработка.",fn:()=>{}}]),200);
+      [{title:"Ладно. Начать с малого.",desc:"Продолжить поиски заработка.",fn:()=>{s.flags.docsStarted=true;addLog("Ты начал цепочку восстановления документов.");}}]),200);
   }
 }
 function buyFood(i){
@@ -357,6 +510,22 @@ function buyFood(i){
       [{title:"Искать работу",desc:"Открыть раздел заработка.",fn:()=>setTab("work")},{title:"Сначала осмотреть город",desc:"Ничего не терять из виду.",fn:()=>setTab("story")}]),200);
   }
 }
+
+function sleepMenu(){
+  showStory("sleepMenu","ОТДЫХ","Ночь не ждёт",
+    "<p>Можно лечь спать и пропустить несколько часов. Сон восстанавливает энергию, но за это время падает сытость и меняется тяга.</p>",
+    [
+      {title:"Поспать 4 часа",desc:"Умеренное восстановление.",fn:()=>sleep(4)},
+      {title:"Поспать 7 часов",desc:"Полноценный отдых.",fn:()=>sleep(7)},
+      {title:"Поспать 9 часов",desc:"Дольше, но энергии восстановится больше.",fn:()=>sleep(9)}
+    ]);
+}
+function sleep(hours){
+  const before=timeText();
+  doAction({minutes:hours*60,energy:Math.min(100,72+s.energy)-s.energy,
+    health:Math.min(100,4+hours*0.8),msg:`Ты поспал ${hours} ч. Было ${before}, стало ${timeText()}.`});
+}
+
 function showMap(){
   showStory("mapTemp","КАРТА · МУРМАНСК","Карта пока в разработке",
     "<p><b>Открыто:</b> железнодорожный вокзал.</p><p>Дальше появятся улицы, магазин, столовая, больница, места работы и новые районы.</p>",
@@ -385,6 +554,26 @@ if(!s.log.length){
 }
 render();
 firstStory();
+
+
+setInterval(()=>{
+  if(!s.mini)return;
+  const m=s.mini;
+  m.timeLeft-=.1;
+  if(m.job.type==="timing"){
+    m.marker += m.dir*2.2;
+    if(m.marker>=96){m.marker=96;m.dir=-1}
+    if(m.marker<=2){m.marker=2;m.dir=1}
+    renderMiniGame();
+  }
+  if(m.timeLeft<=0){
+    finishMiniGameTimeout();
+  }
+},100);
+function finishMiniGameTimeout(){
+  if(!s.mini)return;
+  finishMini(.08);
+}
 
 setInterval(()=>{
   addTime(1);saveGame();render();
