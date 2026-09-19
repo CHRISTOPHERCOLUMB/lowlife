@@ -137,101 +137,127 @@ button:disabled{opacity:.45;cursor:not-allowed}
   .nav button{font-size:9px}.icon{font-size:15px}.panel{min-height:250px}
 }
 
-/* ===== GHOST ARCHIVE UI ASSETS ===== */
+/* ===== GHOST ARCHIVE UI ===== */
 :root{
-  --paper:#e6d4b1;--paper2:#cbb58d;--ink:#28221b;--line:#665744;
+  --paper:#e6d4b1;--paper2:#cbb58d;--ink:#2a2119;--line:#6c5a45;
+  --metal-text:#ead8b7;--metal-muted:#bfae90;--metal-shadow:#120f0b;
 }
-body{
-  background:#171512 url("assets/textures/metal.png") center/720px 720px repeat;
-}
+body{background:#171512 url("assets/textures/metal.png") center/720px 720px repeat}
 .app{padding:8px;max-width:700px}
 .paper{
   background:#e8d8ba url("assets/textures/paper.png") center/cover repeat;
-  border:0;
-  box-shadow:0 0 0 2px #1b1814,0 14px 45px #000d;
+  border:0;box-shadow:0 0 0 2px #1b1814,0 14px 45px #000d;
 }
 .paper:after{opacity:.07}
-.profile,.panel,.action-card,.nav button,.choice,.mini-btn{
-  background-color:transparent;
-}
-.panel{
-  background-image:url("assets/ui/panel.png");
-  background-size:100% 100%;
-  background-position:center;
-  background-repeat:no-repeat;
-  border:0;padding:18px;
-  filter:drop-shadow(0 3px 4px #0005);
-}
+
+/* Metal-backed profile: light text + dark shadow for contrast. */
 .profile{
-  background-image:url("assets/ui/metal_panel.png");
-  background-size:100% 100%;background-repeat:no-repeat;
-  border:0;padding:15px;
+  background:url("assets/ui/metal_panel.png") center/100% 100% no-repeat;
+  border:0;padding:17px 18px;color:var(--metal-text);
+  text-shadow:0 1px 2px #090806,0 0 3px #090806;
 }
+.profile .money{color:#f2dfba;font-size:22px;line-height:1.1}
+.profile .xp{color:var(--metal-muted)}
+.profile .stat{background:#09080655;border:1px solid #d0b98f55;color:#f0dfc1}
+.profile .statline{font-size:10px;line-height:1.15}
+.profile .statline span{white-space:nowrap}
+.profile .bar{background:#08070599;border:1px solid #d5bf9955;height:7px}
+.profile .fill{background:#d2b47e;box-shadow:0 0 4px #0008}
+.profile .fill.bad{background:#a76a58}
+
+/* Main panel */
+.panel{
+  background:url("assets/ui/panel.png") center/100% 100% no-repeat;
+  border:0;padding:21px 23px 23px;filter:drop-shadow(0 3px 4px #0005);
+  color:var(--ink);overflow:hidden;
+}
+.panel-title{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:12px;
+  border-bottom:1px solid #75634d;padding:0 2px 8px;margin-bottom:10px;
+}
+.panel-title h2{font-size:17px;line-height:1.15;margin:0;min-width:0;overflow-wrap:break-word}
+.panel-title span{font-size:9px;color:#655541;text-transform:uppercase;line-height:1.2;text-align:right;max-width:42%;overflow-wrap:break-word}
+.content{font-size:14px;line-height:1.45;min-width:0;overflow:hidden}
+.story-preview,.notice{color:#342a20}
+.story-preview{border-left:3px solid #5e4b38;padding:9px 11px;background:#0000000b;margin-bottom:9px;overflow-wrap:break-word}
+.notice{padding:10px 11px;border-left:3px solid #5e4b38;background:#0000000b;font-size:12px;overflow-wrap:break-word}
+.event-list{max-height:180px;overflow:auto}
+.event{padding:7px 0;border-bottom:1px dotted #9b8b70;overflow-wrap:break-word}
+.event b{font-size:11px;color:#665844;margin-right:5px}
+
+/* Buttons: generous inner safe area so generated texture never fights the text. */
+.cardgrid{display:grid;gap:9px;min-width:0}
 .action-card,.choice,.mini-btn{
-  background-image:url("assets/ui/button.png");
-  background-size:100% 100%;background-repeat:no-repeat;
-  border:0;box-shadow:none;
-  padding:13px 15px;
+  position:relative;width:100%;min-width:0;min-height:70px;
+  border:0;background:url("assets/ui/button.png") center/100% 100% no-repeat;
+  box-shadow:none;color:#30251b;text-align:left;cursor:pointer;
+  padding:16px 78px 16px 25px;text-shadow:0 1px 0 #f2e4c9;
+  overflow:hidden;
+}
+.action-card strong,.choice strong{display:block;font-size:13px;line-height:1.18;font-weight:800;overflow-wrap:break-word}
+.action-card small,.choice small{display:block;color:#675542;margin-top:4px;font-size:10px;line-height:1.28;overflow-wrap:break-word}
+.action-card .tag{
+  position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  max-width:58px;border:1px solid #806d52;padding:4px 5px;font-size:9px;
+  line-height:1.1;text-align:center;overflow-wrap:break-word;background:#d8c39d99;
 }
 .action-card:active,.choice:active,.mini-btn:active,.nav button:active{
-  background-image:url("assets/ui/button_pressed.png");
-  background-size:100% 100%;transform:translateY(1px);
+  background-image:url("assets/ui/button_pressed.png");transform:translateY(1px)
+}
+
+/* Bottom navigation: no emoji, only clean labels. */
+.nav{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin-top:10px;
+  border-top:1px solid #675643;padding-top:9px;min-width:0;
 }
 .nav button{
-  background-image:url("assets/ui/button.png");
-  background-size:100% 100%;background-repeat:no-repeat;
-  border:0;
+  min-width:0;min-height:52px;border:0;
+  background:url("assets/ui/button.png") center/100% 100% no-repeat;
+  padding:9px 4px;font-size:10px;font-weight:800;line-height:1.1;
+  color:#30251b;text-shadow:0 1px 0 #f2e4c9;cursor:pointer;
+  white-space:normal;overflow-wrap:break-word;word-break:normal;
 }
-.nav button.active{
-  background-image:url("assets/ui/button_pressed.png");
-  background-size:100% 100%;box-shadow:none;
-}
-.story-card{
-  background:#e5d5b6 url("assets/ui/events.png") center/100% 100% no-repeat;
-  border:0;box-shadow:0 15px 50px #000c;
-}
-.story-head{border-bottom:0;padding:24px 24px 12px}
-.story-body{padding:14px 24px}
-.story-choices{padding:0 24px 24px}
-.story-preview{background:#0000000b;border-left-color:#5e4b38}
-.stat{background:#00000009;border-color:#806f57}
-.bar{background:#8d806a55;border-color:#655743}
-.fill{background:#4f4538}
-.notice{background:#00000009}
-/* 4x3 icon atlas: health, energy, food, craving / money, xp, work, shop / quests, map, sleep, settings */
-.icon-sprite{
-  display:inline-block;width:24px;height:24px;vertical-align:middle;margin-right:5px;
-  background-image:url("assets/sheets/icons.png");
-  background-size:400% 300%;background-repeat:no-repeat;
-}
-.icon-health{background-position:0 0}.icon-energy{background-position:33.333% 0}.icon-food{background-position:66.666% 0}.icon-craving{background-position:100% 0}
-.icon-money{background-position:0 50%}.icon-xp{background-position:33.333% 50%}.icon-work{background-position:66.666% 50%}.icon-shop{background-position:100% 50%}
-.icon-quests{background-position:0 100%}.icon-map{background-position:33.333% 100%}.icon-sleep{background-position:66.666% 100%}.icon-settings{background-position:100% 100%}
+.nav button.active{background-image:url("assets/ui/button_pressed.png");box-shadow:none;color:#241b14}
 
-/* ===== MOBILE TEXT FIT FIX ===== */
+/* Story/event window */
+.story-card{
+  width:min(640px,100%);max-height:92vh;overflow:auto;
+  background:#e5d5b6 url("assets/ui/events.png") center/100% 100% no-repeat;
+  border:0;box-shadow:0 15px 50px #000c;position:relative;color:var(--ink)
+}
+.story-head{padding:24px 25px 12px;border-bottom:0}
+.story-head .chapter{font-size:10px;letter-spacing:2px;color:#655541;text-transform:uppercase}
+.story-head h2{margin:4px 0 0;font-size:22px;line-height:1.15;overflow-wrap:break-word}
+.story-body{padding:14px 25px;overflow-wrap:break-word}
+.story-body p{margin:0 0 11px;line-height:1.55;overflow-wrap:break-word}
+.story-choices{display:grid;gap:8px;padding:0 25px 25px}
+.choice{min-height:62px;padding:14px 20px}
+.close{position:absolute;right:13px;top:10px;border:0;background:transparent;color:#3a2d21;font-size:24px;cursor:pointer}
+
+/* Mini games */
+.minigame-wrap{padding:6px 0}.minigame-info{font-size:12px;color:#665844;margin-bottom:12px}
+.skillbar{height:34px;border:1px solid #6c5a45;background:#b7a789;position:relative;overflow:hidden}
+.skillzone{position:absolute;top:0;height:100%;background:#6c7b61aa}.skillmarker{position:absolute;top:-2px;width:5px;height:38px;background:#2d261e;box-shadow:0 0 0 1px #eee}
+.timerline{font-size:11px;color:#665844;margin-top:7px}.mini-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.mini-btn{min-height:52px;padding:12px 18px;text-align:center}
+
+/* Hard limits that prevent any component from pushing the layout wider. */
 *,*::before,*::after{min-width:0}
-.panel,.profile,.action-card,.choice,.mini-btn,.story-card,.story-body,.content{overflow-wrap:anywhere;word-break:normal}
-.panel-title{gap:8px;align-items:center}
-.panel-title h2{min-width:0;max-width:75%;line-height:1.15;overflow-wrap:anywhere}
-.panel-title span{min-width:0;text-align:right;overflow-wrap:anywhere}
-.content{min-width:0}
-.action-card strong,.action-card small,.choice strong,.choice small,.notice,.story-preview,.event{overflow-wrap:anywhere;word-break:break-word}
-.statline{gap:6px;align-items:center}
-.statline span{min-width:0;overflow-wrap:anywhere;line-height:1.15}
-.statline b{flex:0 0 auto}
-.nav button{min-width:0;min-height:46px;padding:7px 2px;font-size:11px;line-height:1.1;white-space:normal;overflow-wrap:anywhere}
-.nav button .icon{display:none}
+button{max-width:100%}
+.action-card,.choice,.mini-btn,.nav button{overflow-wrap:break-word}
+
 @media(max-width:420px){
-  .panel{padding:14px 13px}
-  .panel-title h2{font-size:15px;max-width:70%}
-  .panel-title span{font-size:9px}
-  .content{font-size:13px}
-  .action-card{padding:12px 13px}
-  .action-card strong{font-size:13px;line-height:1.2}
-  .action-card small{font-size:10px;line-height:1.3}
-  .stat{padding:6px 5px}
-  .statline{font-size:10px}
-  .nav button{font-size:10px;min-height:44px}
+  .ui{padding:8px}.name{font-size:16px}.money{font-size:19px}
+  .profile{padding:15px 13px}.stat{padding:6px 5px}.profile .statline{font-size:9.5px}
+  .panel{padding:18px 17px 20px}.panel-title h2{font-size:16px}.panel-title span{font-size:8px;max-width:38%}
+  .content{font-size:13px}.action-card{min-height:72px;padding:15px 69px 15px 20px}
+  .action-card strong{font-size:12px}.action-card small{font-size:9.5px}.action-card .tag{right:15px;max-width:50px;font-size:8.5px}
+  .nav{gap:3px}.nav button{min-height:48px;padding:8px 2px;font-size:9px}
+  .story-head{padding:22px 19px 10px}.story-body{padding:12px 19px}.story-choices{padding:0 19px 19px}
+}
+@media(max-width:340px){
+  .profile{grid-template-columns:1fr}.statgrid{grid-template-columns:1fr 1fr}
+  .nav button{font-size:8.5px}.action-card{padding-left:17px;padding-right:62px}
 }
 </style>
 </head>
@@ -388,7 +414,7 @@ function renderPanel(){
       <button class="action-card" onclick="doJob(${i})" ${s.energy<j.need?'disabled':''}>
         <span class="tag">${j.pay}</span><strong>${j.name}</strong><small>${j.desc} · −${j.need} энергии · −${Math.abs(j.food)} сытости</small>
       </button>`).join("")+
-      `<button class="action-card" onclick="learnDocuments()"><strong>📄 Разобраться с документами</strong><small>20 минут · −3 энергии · открывает путь к нормальной работе</small></button>
+      `<button class="action-card" onclick="learnDocuments()"><strong>Разобраться с документами</strong><small>20 минут · −3 энергии · открывает путь к нормальной работе</small></button>
       <div class="notice">Подработки можно повторять, но они занимают время и силы. Бесконечной бесплатной фарм-тапалки здесь не будет.</div>
       </div>`;
   }else if(s.tab==="shop"){
@@ -419,10 +445,10 @@ function renderPanel(){
     title.textContent="Ещё";sub.textContent="интерфейс";
     c.innerHTML=`
       <div class="cardgrid">
-        <button class="action-card" onclick="sleepMenu()"><strong>🛏 Отдых / сон</strong><small>Выбери, сколько часов проспать. Время проходит, энергия восстанавливается.</small></button>
-        <button class="action-card" onclick="showInventory()"><strong>🎒 Инвентарь</strong><small>Вещи, которые у тебя есть.</small></button>
-        <button class="action-card" onclick="showMap()"><strong>🗺 Карта</strong><small>Доступные места Мурманска.</small></button>
-        <button class="action-card" onclick="saveGame();addLog('Игра сохранена.');render()"><strong>💾 Сохранить</strong><small>Сохранение в памяти браузера.</small></button>
+        <button class="action-card" onclick="sleepMenu()"><strong>Отдых / сон</strong><small>Выбери, сколько часов проспать. Время проходит, энергия восстанавливается.</small></button>
+        <button class="action-card" onclick="showInventory()"><strong>Инвентарь</strong><small>Вещи, которые у тебя есть.</small></button>
+        <button class="action-card" onclick="showMap()"><strong>Карта</strong><small>Доступные места Мурманска.</small></button>
+        <button class="action-card" onclick="saveGame();addLog('Игра сохранена.');render()"><strong>Сохранить</strong><small>Сохранение в памяти браузера.</small></button>
         <div class="notice">Версия v0.2. Это уже каркас интерфейса; дальше добавим нормальную карту, достижения, больше сюжетных сцен и визуальные ассеты.</div>
       </div>`;
   }
