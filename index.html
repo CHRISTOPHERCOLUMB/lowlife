@@ -207,6 +207,32 @@ body{
 .icon-health{background-position:0 0}.icon-energy{background-position:33.333% 0}.icon-food{background-position:66.666% 0}.icon-craving{background-position:100% 0}
 .icon-money{background-position:0 50%}.icon-xp{background-position:33.333% 50%}.icon-work{background-position:66.666% 50%}.icon-shop{background-position:100% 50%}
 .icon-quests{background-position:0 100%}.icon-map{background-position:33.333% 100%}.icon-sleep{background-position:66.666% 100%}.icon-settings{background-position:100% 100%}
+
+/* ===== MOBILE TEXT FIT FIX ===== */
+*,*::before,*::after{min-width:0}
+.panel,.profile,.action-card,.choice,.mini-btn,.story-card,.story-body,.content{overflow-wrap:anywhere;word-break:normal}
+.panel-title{gap:8px;align-items:center}
+.panel-title h2{min-width:0;max-width:75%;line-height:1.15;overflow-wrap:anywhere}
+.panel-title span{min-width:0;text-align:right;overflow-wrap:anywhere}
+.content{min-width:0}
+.action-card strong,.action-card small,.choice strong,.choice small,.notice,.story-preview,.event{overflow-wrap:anywhere;word-break:break-word}
+.statline{gap:6px;align-items:center}
+.statline span{min-width:0;overflow-wrap:anywhere;line-height:1.15}
+.statline b{flex:0 0 auto}
+.nav button{min-width:0;min-height:46px;padding:7px 2px;font-size:11px;line-height:1.1;white-space:normal;overflow-wrap:anywhere}
+.nav button .icon{display:none}
+@media(max-width:420px){
+  .panel{padding:14px 13px}
+  .panel-title h2{font-size:15px;max-width:70%}
+  .panel-title span{font-size:9px}
+  .content{font-size:13px}
+  .action-card{padding:12px 13px}
+  .action-card strong{font-size:13px;line-height:1.2}
+  .action-card small{font-size:10px;line-height:1.3}
+  .stat{padding:6px 5px}
+  .statline{font-size:10px}
+  .nav button{font-size:10px;min-height:44px}
+}
 </style>
 </head>
 <body>
@@ -226,9 +252,9 @@ body{
       <div class="xp">Уровень <b id="level">1</b> · <span id="xp">0</span>/100 XP</div>
     </div>
     <div class="statgrid">
-      <div class="stat"><div class="statline"><span>❤️ Здоровье</span><b id="healthV">72</b></div><div class="bar"><div class="fill" id="healthB"></div></div></div>
-      <div class="stat"><div class="statline"><span>⚡ Энергия</span><b id="energyV">54</b></div><div class="bar"><div class="fill" id="energyB"></div></div></div>
-      <div class="stat"><div class="statline"><span>🍽 Сытость</span><b id="foodV">32</b></div><div class="bar"><div class="fill" id="foodB"></div></div></div>
+      <div class="stat"><div class="statline"><span>Здоровье</span><b id="healthV">72</b></div><div class="bar"><div class="fill" id="healthB"></div></div></div>
+      <div class="stat"><div class="statline"><span>Энергия</span><b id="energyV">54</b></div><div class="bar"><div class="fill" id="energyB"></div></div></div>
+      <div class="stat"><div class="statline"><span>Сытость</span><b id="foodV">32</b></div><div class="bar"><div class="fill" id="foodB"></div></div></div>
       <div class="stat"><div class="statline"><span>Тяга</span><b id="cravingV">74</b></div><div class="bar"><div class="fill bad" id="cravingB"></div></div></div>
     </div>
   </section>
@@ -242,11 +268,11 @@ body{
   </section>
 
   <nav class="nav">
-    <button data-tab="story" onclick="setTab('story')"><span class="icon">📜</span>История</button>
-    <button data-tab="work" onclick="setTab('work')"><span class="icon">💼</span>Заработок</button>
-    <button data-tab="shop" onclick="setTab('shop')"><span class="icon">🏪</span>Магазин</button>
-    <button data-tab="quests" onclick="setTab('quests')"><span class="icon">✦</span>Задания</button>
-    <button data-tab="more" onclick="setTab('more')"><span class="icon">☰</span>Ещё</button>
+    <button data-tab="story" onclick="setTab('story')">История</button>
+    <button data-tab="work" onclick="setTab('work')">Заработок</button>
+    <button data-tab="shop" onclick="setTab('shop')">Магазин</button>
+    <button data-tab="quests" onclick="setTab('quests')">Задания</button>
+    <button data-tab="more" onclick="setTab('more')">Ещё</button>
   </nav>
 </div>
 </main></div>
