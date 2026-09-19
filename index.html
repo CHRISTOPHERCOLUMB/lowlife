@@ -840,6 +840,202 @@ button,button:focus,button:focus-visible,button:active,button:hover,a:focus,a:ac
   .action-card strong,.choice strong{font-size:14px!important}
   .action-card small,.choice small{font-size:10px!important}
 }
+
+/* ===== FINAL V6 — BUTTON CONTENT LOCK ===== */
+
+/* Never let browser default button geometry or the old stacked rules affect the cards. */
+.action-card,.choice,.mini-btn{
+  position:relative!important;
+  box-sizing:border-box!important;
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:200px!important;
+  min-height:200px!important;
+  max-height:200px!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border:0!important;
+  background:url("assets/ui/button.png") center/100% 100% no-repeat!important;
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  transform:none!important;
+  text-align:center!important;
+  color:#261d16!important;
+}
+
+/* The generated button texture has a large visual frame; lock each text block to a
+   known safe zone inside that frame instead of relying on flex positioning. */
+.action-card strong,.choice strong{
+  position:absolute!important;
+  left:12%!important;
+  right:12%!important;
+  top:38px!important;
+  width:auto!important;
+  max-width:none!important;
+  height:auto!important;
+  max-height:42px!important;
+  margin:0!important;
+  padding:0!important;
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:16px!important;
+  line-height:1.15!important;
+  font-weight:900!important;
+  color:#241b14!important;
+  text-align:center!important;
+  text-shadow:0 1px 0 #f5e5c7,0 0 2px #f5e5c7!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+}
+
+.action-card small,.choice small{
+  position:absolute!important;
+  left:10%!important;
+  right:10%!important;
+  top:82px!important;
+  width:auto!important;
+  max-width:none!important;
+  height:auto!important;
+  max-height:48px!important;
+  margin:0!important;
+  padding:0!important;
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:3!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+  font-family:Arial,"Helvetica Neue",sans-serif!important;
+  font-size:11px!important;
+  line-height:1.35!important;
+  font-weight:700!important;
+  color:#3a2b20!important;
+  text-align:center!important;
+  text-shadow:0 1px 0 #f3e2c1,0 0 2px #f3e2c1!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+}
+
+.action-card .tag{
+  position:absolute!important;
+  left:50%!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:22px!important;
+  transform:translateX(-50%)!important;
+  width:auto!important;
+  max-width:42%!important;
+  height:auto!important;
+  max-height:25px!important;
+  margin:0!important;
+  padding:5px 11px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  border:1px solid #554332!important;
+  border-radius:3px!important;
+  background:#382b20!important;
+  color:#f4dfbb!important;
+  font-family:Arial,"Helvetica Neue",sans-serif!important;
+  font-size:10px!important;
+  line-height:1.05!important;
+  font-weight:900!important;
+  text-align:center!important;
+  text-shadow:0 1px 1px #000!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+/* Cards without a price still use the same safe text area. */
+.cardgrid>.action-card:not(button){
+  height:200px!important;
+  min-height:200px!important;
+  max-height:200px!important;
+}
+
+/* Keep the grid itself inside the paper texture. */
+.cardgrid{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+  gap:12px!important;
+  overflow:hidden!important;
+}
+
+/* Quest cards are not clickable, but must look identical and keep text inside. */
+.cardgrid>.action-card:not(button) strong{top:42px!important}
+.cardgrid>.action-card:not(button) small{top:86px!important}
+
+/* Modal choice buttons: same principle, slightly shorter. */
+.story-choices .choice{
+  height:160px!important;
+  min-height:160px!important;
+  max-height:160px!important;
+}
+.story-choices .choice strong{top:32px!important}
+.story-choices .choice small{top:72px!important}
+
+/* Remove the 1px active jump and every browser focus/tap flash. */
+button,button:hover,button:active,button:focus,button:focus-visible{
+  outline:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+  -webkit-focus-ring-color:transparent!important;
+}
+button:active{transform:none!important}
+*{-webkit-tap-highlight-color:transparent!important}
+
+@media(max-width:420px){
+  .action-card,.choice,.mini-btn{
+    height:200px!important;
+    min-height:200px!important;
+    max-height:200px!important;
+  }
+  .action-card strong,.choice strong{
+    top:38px!important;
+    left:10%!important;
+    right:10%!important;
+    font-size:15px!important;
+    max-height:42px!important;
+  }
+  .action-card small,.choice small{
+    top:83px!important;
+    left:8%!important;
+    right:8%!important;
+    font-size:11px!important;
+    line-height:1.35!important;
+    max-height:48px!important;
+  }
+  .action-card .tag{
+    bottom:21px!important;
+    font-size:9.5px!important;
+    padding:5px 10px!important;
+  }
+  .cardgrid>.action-card:not(button){
+    height:200px!important;
+    min-height:200px!important;
+    max-height:200px!important;
+  }
+}
+
+@media(max-width:340px){
+  .action-card,.choice,.mini-btn{
+    height:190px!important;
+    min-height:190px!important;
+    max-height:190px!important;
+  }
+  .action-card strong,.choice strong{top:34px!important;font-size:14px!important}
+  .action-card small,.choice small{top:78px!important;font-size:10.5px!important}
+  .action-card .tag{bottom:19px!important;font-size:9px!important}
+}
 </style>
 
 </head>
