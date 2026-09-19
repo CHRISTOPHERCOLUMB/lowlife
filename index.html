@@ -260,7 +260,7 @@ button{max-width:100%}
   .nav button{font-size:8.5px}.action-card{padding-left:17px;padding-right:62px}
 }
 
-/* FINAL UI POLISH */
+/* FINAL UI POLISH v2 */
 .profile > div:first-child{padding-left:10px}
 .profile{grid-template-columns:minmax(105px,.72fr) minmax(0,1.6fr);gap:12px}
 .profile .money{white-space:nowrap}
@@ -269,33 +269,579 @@ button{max-width:100%}
 .panel-title{align-items:center}
 .panel-title h2,.panel-title span{min-width:0;overflow:hidden;text-overflow:ellipsis}
 
-.action-card,.choice,.mini-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-sizing:border-box;padding:12px 18px;min-height:82px;overflow:hidden}
-.action-card strong,.choice strong{width:100%;max-width:100%;font-size:13px;line-height:1.2;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow-wrap:anywhere;word-break:break-word}
-.action-card small,.choice small{width:100%;max-width:100%;margin-top:5px;line-height:1.2;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow-wrap:anywhere;word-break:break-word}
-.action-card .tag{position:static;transform:none;float:none;display:inline-flex;align-items:center;justify-content:center;width:auto;max-width:90%;margin-top:7px;padding:3px 9px;border:1px solid #715d46;border-radius:2px;background:#3b3024;color:#f0dfc2;text-shadow:0 1px 1px #000;font-size:10px;font-weight:800;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box}
+/* Large readable action buttons: text is allowed to use as many lines as needed. */
+.action-card,.choice,.mini-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-sizing:border-box;width:100%;min-height:112px;height:auto;
+  padding:15px 22px;gap:0;text-align:center;overflow:visible;
+}
+.action-card strong,.choice strong{
+  display:block;width:100%;max-width:100%;margin:0;
+  font-size:14px;line-height:1.28;font-weight:800;letter-spacing:.1px;
+  color:#2d231a;text-shadow:0 1px 0 #f2e4c9;
+  overflow:visible;white-space:normal;overflow-wrap:anywhere;word-break:normal;
+}
+.action-card small,.choice small{
+  display:block;width:100%;max-width:100%;margin:7px 0 0;
+  font-size:10.5px;line-height:1.35;font-weight:600;color:#66513d;
+  overflow:visible;white-space:normal;overflow-wrap:anywhere;word-break:normal;
+}
+.action-card .tag{
+  position:static;transform:none;float:none;display:inline-flex;align-items:center;justify-content:center;
+  width:max-content;max-width:100%;margin:9px 0 0;padding:4px 11px;
+  border:1px solid #715d46;border-radius:3px;background:#3b3024;color:#f0dfc2;
+  text-shadow:0 1px 1px #000;font-size:10px;font-weight:800;line-height:1.15;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-sizing:border-box;
+}
 
-.nav button,.nav button.active{background:url("assets/ui/button.png") center/100% 100% no-repeat !important;box-shadow:none !important;color:#30251b}
+/* Bottom navigation stays compact and centered. */
+.nav button,.nav button.active{
+  background:url("assets/ui/button.png") center/100% 100% no-repeat !important;
+  box-shadow:none !important;color:#30251b;
+}
 .nav button.active{background-image:url("assets/ui/button_pressed.png") !important}
-.nav button{display:flex;align-items:center;justify-content:center;text-align:center;padding:8px 4px;min-height:55px;font-size:10px;line-height:1.1;white-space:normal;overflow:hidden;overflow-wrap:anywhere}
+.nav button{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:8px 4px;min-height:55px;font-size:10px;line-height:1.1;
+  white-space:normal;overflow:hidden;overflow-wrap:anywhere;
+}
 
 .content,.story-body,.story-head,.notice,.story-preview,.event{overflow-wrap:anywhere;word-break:break-word}
 
 @media(max-width:420px){
  .profile{grid-template-columns:minmax(100px,.68fr) minmax(0,1.7fr);gap:9px}
  .profile > div:first-child{padding-left:8px}
- .action-card,.choice,.mini-btn{min-height:78px;padding:10px 14px}
- .action-card strong,.choice strong{font-size:12px}
- .action-card small,.choice small{font-size:9.5px}
- .action-card .tag{font-size:9px;padding:3px 8px;margin-top:5px}
+ .action-card,.choice,.mini-btn{min-height:118px;padding:14px 18px}
+ .action-card strong,.choice strong{font-size:13px;line-height:1.28}
+ .action-card small,.choice small{font-size:10px;line-height:1.34;margin-top:7px}
+ .action-card .tag{font-size:9px;padding:4px 9px;margin-top:8px}
  .nav button{min-height:50px;font-size:8.5px;padding:7px 2px}
 }
 @media(max-width:340px){
  .profile{grid-template-columns:1fr 1.5fr}
  .profile > div:first-child{padding-left:6px}
- .action-card,.choice,.mini-btn{min-height:74px;padding:9px 10px}
+ .action-card,.choice,.mini-btn{min-height:124px;padding:14px 14px}
+ .action-card strong,.choice strong{font-size:12.5px}
+ .action-card small,.choice small{font-size:9.5px}
  .nav button{font-size:8px}
 }
+
+/* FINAL UI POLISH v3 */
+/* Panel heading: centered and lifted away from the textured edge. */
+.panel-title{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;text-align:center;border-bottom:1px solid #75634d;
+  padding:4px 8px 9px;margin:-5px 0 13px;
+}
+.panel-title h2{
+  width:100%;margin:0;font-family:Georgia,"Times New Roman",serif;
+  font-size:19px;line-height:1.12;font-weight:800;letter-spacing:.25px;
+  color:#2d231a;text-align:center;text-shadow:0 1px 0 #f2e4c9;
+  overflow:visible;text-overflow:clip;white-space:normal;
+}
+.panel-title span{
+  width:100%;max-width:100%;margin:0;font-family:Georgia,"Times New Roman",serif;
+  font-size:9px;line-height:1.15;font-weight:700;letter-spacing:1px;
+  color:#765f47;text-align:center;text-transform:uppercase;
+  overflow:visible;text-overflow:clip;white-space:normal;
+}
+/* Descriptions: more archival-looking serif typography and guaranteed room for wrapping. */
+.action-card,.choice,.mini-btn{min-height:142px;padding:17px 20px 15px;justify-content:flex-start;overflow:hidden}
+.action-card strong,.choice strong{
+  flex:0 0 auto;font-family:Georgia,"Times New Roman",serif;font-size:15px;line-height:1.22;
+  font-weight:800;letter-spacing:.1px;overflow-wrap:anywhere;word-break:break-word;
+}
+.action-card small,.choice small{
+  flex:0 0 auto;font-family:Georgia,"Times New Roman",serif;font-size:11px;line-height:1.38;
+  font-weight:500;color:#604d39;margin-top:7px;overflow-wrap:anywhere;word-break:break-word;
+}
+/* Price/tag always below the description. */
+.action-card .tag{
+  flex:0 0 auto;align-self:center;margin:10px 0 0;position:static;transform:none;
+  max-width:92%;font-family:Georgia,"Times New Roman",serif;font-size:10px;line-height:1.15;
+  padding:4px 12px;border-radius:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+/* Kill the browser's default blue focus/tap highlight. */
+button,button:focus,button:active,button:hover{
+  outline:none;-webkit-tap-highlight-color:transparent;
+}
+button:focus-visible{outline:none}
+*{-webkit-tap-highlight-color:transparent}
+.nav button:focus,.nav button:active,.action-card:focus,.action-card:active,.choice:focus,.choice:active,.mini-btn:focus,.mini-btn:active{outline:none;box-shadow:none}
+@media(max-width:420px){
+ .panel-title{padding:3px 7px 8px;margin:-4px 0 12px}
+ .panel-title h2{font-size:18px}
+ .panel-title span{font-size:8.5px}
+ .action-card,.choice,.mini-btn{min-height:150px;padding:17px 17px 14px}
+ .action-card strong,.choice strong{font-size:14px}
+ .action-card small,.choice small{font-size:10.5px;line-height:1.4}
+ .action-card .tag{margin-top:10px;font-size:9.5px}
+}
+@media(max-width:340px){
+ .action-card,.choice,.mini-btn{min-height:160px;padding:17px 14px 14px}
+ .action-card strong,.choice strong{font-size:13.5px}
+ .action-card small,.choice small{font-size:10px}
+}
+
 </style>
+
+<style>
+/* ===== FINAL UI POLISH v4 — safe text layout ===== */
+
+/* Keep every piece of content safely inside the paper texture. */
+.panel{
+  box-sizing:border-box;
+  padding:30px 30px 32px !important;
+  overflow:hidden !important;
+}
+.panel-title{
+  box-sizing:border-box;
+  width:100%;
+  margin:0 0 16px !important;
+  padding:2px 10px 10px !important;
+  text-align:center;
+}
+.panel-title h2,
+.panel-title span{
+  box-sizing:border-box;
+  max-width:100%;
+  padding:0 4px;
+  overflow-wrap:anywhere !important;
+  word-break:break-word !important;
+}
+.panel-title h2{
+  font-family:Georgia,"Times New Roman",serif !important;
+  font-size:18px !important;
+  line-height:1.15 !important;
+  color:#2b2118 !important;
+  text-shadow:0 1px 0 #f4e6c8, 0 0 2px #f4e6c8 !important;
+}
+.panel-title span{
+  font-family:Arial,sans-serif !important;
+  font-size:8.5px !important;
+  line-height:1.2 !important;
+  color:#594633 !important;
+  letter-spacing:1.2px !important;
+  font-weight:800 !important;
+}
+
+.content{
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  overflow:hidden !important;
+  overflow-wrap:anywhere !important;
+  word-break:break-word !important;
+}
+
+/* Story preview / hints / notices get their own safe inner area. */
+.story-preview,
+.notice{
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  padding:10px 13px !important;
+  overflow:hidden !important;
+  overflow-wrap:anywhere !important;
+  word-break:break-word !important;
+  color:#3a2b1e !important;
+  text-shadow:0 1px 0 #f1e2c4;
+}
+.notice{line-height:1.4 !important}
+
+/* Event log: never let a long event escape the paper. */
+.event-list{
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  padding:0 3px;
+  overflow-x:hidden !important;
+}
+.event{
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  padding:8px 5px !important;
+  overflow:hidden !important;
+  overflow-wrap:anywhere !important;
+  word-break:break-word !important;
+  line-height:1.4;
+}
+.event b{white-space:nowrap}
+
+/* All action buttons use a real internal layout. Nothing sits above the button. */
+.cardgrid{
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  gap:11px !important;
+}
+.action-card,
+.choice,
+.mini-btn{
+  box-sizing:border-box !important;
+  position:relative !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  min-height:178px !important;
+  height:auto !important;
+  padding:22px 22px 17px !important;
+  margin:0 !important;
+  overflow:hidden !important;
+  text-align:center !important;
+  font-family:Arial,sans-serif !important;
+  color:#2b2118 !important;
+  text-shadow:none !important;
+}
+
+/* Explicit flex order fixes the "Ещё" buttons and puts price at the bottom. */
+.action-card strong,
+.choice strong{
+  order:1 !important;
+  flex:0 0 auto !important;
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin:0 !important;
+  padding:0 4px !important;
+  box-sizing:border-box !important;
+  font-family:Georgia,"Times New Roman",serif !important;
+  font-size:15px !important;
+  line-height:1.25 !important;
+  font-weight:800 !important;
+  color:#292016 !important;
+  text-align:center !important;
+  text-shadow:0 1px 0 #f4e5c7,0 0 2px #f4e5c7 !important;
+  white-space:normal !important;
+  overflow:hidden !important;
+  overflow-wrap:anywhere !important;
+  word-break:break-word !important;
+}
+
+.action-card small,
+.choice small{
+  order:2 !important;
+  flex:0 0 auto !important;
+  display:-webkit-box !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin:8px 0 0 !important;
+  padding:0 5px !important;
+  box-sizing:border-box !important;
+  font-family:Arial,sans-serif !important;
+  font-size:11px !important;
+  line-height:1.38 !important;
+  font-weight:600 !important;
+  color:#3b2d20 !important;
+  text-align:center !important;
+  text-shadow:0 1px 0 #f2e3c5,0 0 2px #f2e3c5 !important;
+  white-space:normal !important;
+  overflow:hidden !important;
+  overflow-wrap:anywhere !important;
+  word-break:break-word !important;
+  -webkit-box-orient:vertical !important;
+  -webkit-line-clamp:4 !important;
+}
+
+/* Price is always last, never beside the title. */
+.action-card .tag{
+  order:3 !important;
+  position:static !important;
+  transform:none !important;
+  float:none !important;
+  align-self:center !important;
+  flex:0 0 auto !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:max-content !important;
+  max-width:90% !important;
+  margin:11px 0 0 !important;
+  padding:5px 12px !important;
+  box-sizing:border-box !important;
+  border:1px solid #5b4936 !important;
+  border-radius:3px !important;
+  background:#3a2d21 !important;
+  color:#f3dfbd !important;
+  font-family:Arial,sans-serif !important;
+  font-size:10px !important;
+  line-height:1.15 !important;
+  font-weight:800 !important;
+  text-align:center !important;
+  text-shadow:0 1px 1px #000 !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+
+/* Even long descriptions stay inside the texture. */
+.action-card small + .tag{margin-top:11px !important}
+
+/* Disabled buttons remain readable instead of becoming browser-grey. */
+.action-card:disabled,
+.choice:disabled,
+.mini-btn:disabled{
+  opacity:.72 !important;
+  color:inherit !important;
+}
+.action-card:disabled small{color:#4b3b2c !important}
+
+/* Bottom navigation: labels are centered inside their textures. */
+.nav{
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  padding:9px 6px 0 !important;
+  gap:5px !important;
+  overflow:hidden !important;
+}
+.nav button{
+  box-sizing:border-box !important;
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  min-height:55px !important;
+  padding:7px 3px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  font-family:Arial,sans-serif !important;
+  font-size:9px !important;
+  line-height:1.15 !important;
+  font-weight:800 !important;
+  overflow:hidden !important;
+  overflow-wrap:anywhere !important;
+  word-break:break-word !important;
+  text-shadow:0 1px 0 #f2e3c5 !important;
+}
+
+/* Remove every native browser focus/tap/selection flash. */
+button,
+button:focus,
+button:focus-visible,
+button:active,
+button:hover,
+a:focus,
+a:active{
+  outline:none !important;
+  -webkit-tap-highlight-color:transparent !important;
+  -webkit-focus-ring-color:transparent !important;
+}
+*{-webkit-tap-highlight-color:transparent !important}
+
+/* Story modal also gets safe margins. */
+.story-card{
+  box-sizing:border-box;
+  max-width:calc(100vw - 24px) !important;
+}
+.story-head,
+.story-body,
+.story-choices{
+  box-sizing:border-box;
+  max-width:100%;
+  overflow-wrap:anywhere !important;
+  word-break:break-word !important;
+}
+.story-head{padding:25px 30px 13px !important}
+.story-body{padding:15px 30px !important}
+.story-choices{padding:0 30px 28px !important}
+
+@media(max-width:420px){
+  .panel{padding:27px 22px 29px !important}
+  .panel-title{padding:2px 6px 9px !important;margin-bottom:14px !important}
+  .panel-title h2{font-size:17px !important}
+  .action-card,.choice,.mini-btn{
+    min-height:188px !important;
+    padding:21px 17px 16px !important;
+  }
+  .action-card strong,.choice strong{font-size:14px !important}
+  .action-card small,.choice small{font-size:10.5px !important;line-height:1.4 !important;-webkit-line-clamp:4 !important}
+  .action-card .tag{font-size:9.5px !important;margin-top:10px !important}
+  .story-head{padding:22px 22px 12px !important}
+  .story-body{padding:14px 22px !important}
+  .story-choices{padding:0 22px 22px !important}
+}
+@media(max-width:340px){
+  .panel{padding:25px 17px 27px !important}
+  .action-card,.choice,.mini-btn{min-height:196px !important;padding:20px 14px 15px !important}
+  .action-card strong,.choice strong{font-size:13.5px !important}
+  .action-card small,.choice small{font-size:10px !important}
+  .nav button{font-size:8px !important}
+}
+</style>
+
+
+<style>
+/* ===== FINAL V5 — CLEAN ARCHIVE LAYOUT ===== */
+html,body{overflow-x:hidden!important}
+
+/* Main textured panel: keep ALL text inside the actual parchment area of the asset. */
+.panel{
+  position:relative!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  padding:68px 34px 52px!important;
+  margin-top:10px!important;
+  overflow:hidden!important;
+}
+
+/* The asset has a heavy metal header; place the section title on the inner paper. */
+.panel-title{
+  position:relative!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0 0 18px!important;
+  padding:0 8px 9px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:3px!important;
+  border-bottom:1px solid #806d55!important;
+  text-align:center!important;
+}
+.panel-title h2{
+  width:100%!important;max-width:100%!important;margin:0!important;padding:0!important;
+  font-family:Georgia,"Times New Roman",serif!important;
+  font-size:21px!important;line-height:1.05!important;font-weight:900!important;
+  color:#2a2018!important;text-align:center!important;
+  text-shadow:0 1px 0 #ead9b8,0 0 2px #ead9b8!important;
+  overflow:hidden!important;overflow-wrap:anywhere!important;word-break:break-word!important;
+}
+.panel-title span{
+  width:100%!important;max-width:100%!important;margin:0!important;padding:0!important;
+  font-family:Arial,sans-serif!important;font-size:8px!important;line-height:1.1!important;
+  letter-spacing:1.4px!important;font-weight:700!important;color:#665541!important;
+  text-align:center!important;overflow:hidden!important;overflow-wrap:anywhere!important;
+}
+
+.content{
+  box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+  min-width:0!important;overflow:hidden!important;overflow-wrap:anywhere!important;word-break:break-word!important;
+  font-family:Arial,sans-serif!important;
+}
+
+/* Every hint/log/notice gets a safe inner margin. */
+.notice,.story-preview,.event-list,.event{
+  box-sizing:border-box!important;max-width:100%!important;min-width:0!important;
+  overflow:hidden!important;overflow-wrap:anywhere!important;word-break:break-word!important;
+}
+.notice,.story-preview{
+  width:100%!important;margin-left:0!important;margin-right:0!important;
+  padding:11px 15px!important;line-height:1.42!important;
+  font-family:Arial,sans-serif!important;font-size:11px!important;color:#34291f!important;
+  text-shadow:0 1px 0 #f0dfbf!important;
+}
+.event-list{width:100%!important;padding:0 4px!important;overflow-x:hidden!important}
+.event{width:100%!important;padding:8px 6px!important;line-height:1.38!important;font-family:Arial,sans-serif!important}
+.event b{white-space:nowrap!important}
+
+/* Buttons: content is a vertical stack and can NEVER paint outside the button. */
+.cardgrid{width:100%!important;max-width:100%!important;min-width:0!important;display:grid!important;gap:14px!important}
+.action-card,.choice,.mini-btn{
+  box-sizing:border-box!important;position:relative!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;
+  justify-content:flex-start!important;
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  height:178px!important;min-height:178px!important;max-height:178px!important;
+  margin:0!important;padding:25px 24px 18px!important;
+  border:0!important;overflow:hidden!important;
+  background:url("assets/ui/button.png") center/100% 100% no-repeat!important;
+  box-shadow:none!important;
+  color:#251c15!important;text-align:center!important;
+  -webkit-appearance:none!important;appearance:none!important;
+}
+.action-card strong,.choice strong{
+  order:1!important;display:-webkit-box!important;flex:0 0 auto!important;
+  width:100%!important;max-width:100%!important;height:auto!important;
+  margin:0!important;padding:0 5px!important;box-sizing:border-box!important;
+  font-family:Georgia,"Times New Roman",serif!important;font-size:16px!important;
+  line-height:1.15!important;font-weight:900!important;color:#261d16!important;
+  text-align:center!important;text-shadow:0 1px 0 #f3e3c3,0 0 2px #f3e3c3!important;
+  white-space:normal!important;overflow:hidden!important;overflow-wrap:anywhere!important;word-break:break-word!important;
+  -webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;
+}
+.action-card small,.choice small{
+  order:2!important;display:-webkit-box!important;flex:0 1 auto!important;
+  width:100%!important;max-width:100%!important;height:auto!important;
+  margin:9px 0 0!important;padding:0 7px!important;box-sizing:border-box!important;
+  font-family:Arial,sans-serif!important;font-size:11px!important;line-height:1.28!important;
+  font-weight:700!important;color:#403126!important;text-align:center!important;
+  text-shadow:0 1px 0 #f2e2c1,0 0 2px #f2e2c1!important;
+  white-space:normal!important;overflow:hidden!important;overflow-wrap:anywhere!important;word-break:break-word!important;
+  -webkit-box-orient:vertical!important;-webkit-line-clamp:3!important;
+}
+.action-card .tag{
+  order:3!important;position:static!important;transform:none!important;float:none!important;
+  align-self:center!important;display:inline-flex!important;flex:0 0 auto!important;
+  width:max-content!important;max-width:90%!important;margin:auto 0 0!important;
+  padding:5px 12px!important;box-sizing:border-box!important;
+  border:1px solid #554332!important;border-radius:3px!important;
+  background:#382b20!important;color:#f2dfbd!important;
+  font-family:Arial,sans-serif!important;font-size:10px!important;line-height:1.1!important;
+  font-weight:900!important;text-align:center!important;text-shadow:0 1px 1px #000!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+}
+
+/* Non-button cards in quests stay inside the same safe width. */
+.cardgrid>.action-card:not(button){height:150px!important;min-height:150px!important;max-height:150px!important}
+
+/* Remove browser flashes. */
+button,button:focus,button:focus-visible,button:active,button:hover,a:focus,a:active{
+  outline:none!important;-webkit-tap-highlight-color:transparent!important;-webkit-focus-ring-color:transparent!important;
+}
+*{-webkit-tap-highlight-color:transparent!important}
+
+/* Bottom navigation is deliberately separate from the tall content buttons. */
+.nav{
+  box-sizing:border-box!important;width:100%!important;max-width:100%!important;
+  padding:10px 5px 0!important;gap:5px!important;overflow:hidden!important;
+}
+.nav button{
+  box-sizing:border-box!important;width:100%!important;max-width:100%!important;min-width:0!important;
+  min-height:55px!important;height:55px!important;padding:7px 3px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  border:0!important;background:url("assets/ui/button.png") center/100% 100% no-repeat!important;
+  font-family:Arial,sans-serif!important;font-size:9px!important;line-height:1.1!important;
+  font-weight:900!important;color:#30251b!important;text-align:center!important;
+  overflow:hidden!important;overflow-wrap:anywhere!important;word-break:break-word!important;
+  text-shadow:0 1px 0 #f3e3c5!important;
+}
+.nav button.active{background-image:url("assets/ui/button_pressed.png")!important;box-shadow:none!important}
+
+/* Modal choices use the same safe stack but are allowed to be shorter. */
+.story-choices{box-sizing:border-box!important;max-width:100%!important;overflow:hidden!important}
+.story-choices .choice{height:135px!important;min-height:135px!important;max-height:135px!important}
+
+@media(max-width:420px){
+  .panel{padding:62px 27px 48px!important}
+  .panel-title{margin-bottom:16px!important;padding-bottom:8px!important}
+  .panel-title h2{font-size:20px!important}
+  .action-card,.choice,.mini-btn{height:174px!important;min-height:174px!important;max-height:174px!important;padding:24px 19px 17px!important}
+  .action-card strong,.choice strong{font-size:15px!important}
+  .action-card small,.choice small{font-size:10.5px!important;line-height:1.3!important}
+  .action-card .tag{font-size:9.5px!important;padding:5px 10px!important}
+  .cardgrid>.action-card:not(button){height:145px!important;min-height:145px!important;max-height:145px!important}
+  .story-choices .choice{height:130px!important;min-height:130px!important;max-height:130px!important}
+}
+@media(max-width:340px){
+  .panel{padding:58px 21px 44px!important}
+  .action-card,.choice,.mini-btn{height:170px!important;min-height:170px!important;max-height:170px!important;padding:22px 15px 16px!important}
+  .action-card strong,.choice strong{font-size:14px!important}
+  .action-card small,.choice small{font-size:10px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="app"><main class="paper">
@@ -485,7 +1031,7 @@ function renderPanel(){
         <button class="action-card" onclick="showInventory()"><strong>Инвентарь</strong><small>Вещи, которые у тебя есть.</small></button>
         <button class="action-card" onclick="showMap()"><strong>Карта</strong><small>Доступные места Мурманска.</small></button>
         <button class="action-card" onclick="saveGame();addLog('Игра сохранена.');render()"><strong>Сохранить</strong><small>Сохранение в памяти браузера.</small></button>
-        <div class="notice">Версия v0.2. Это уже каркас интерфейса; дальше добавим нормальную карту, достижения, больше сюжетных сцен и визуальные ассеты.</div>
+        <div class="notice">Версия v0.5. Это уже каркас интерфейса; дальше добавим нормальную карту, достижения, больше сюжетных сцен и визуальные ассеты.</div>
       </div>`;
   }
 }
